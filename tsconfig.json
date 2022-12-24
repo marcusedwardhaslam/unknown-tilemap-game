@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ES6",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "outDir": "./js",
+    "rootDir": "src",
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES6",
+    "lib": [
+      "DOM",
+      "ES6"
+    ]
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["./src/**.spec.ts", "node_modules"]
+}
