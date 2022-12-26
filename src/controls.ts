@@ -1,7 +1,8 @@
 import { TILE_SIZE } from './map.js';
+import { Position } from './pathfinding.js';
 
 interface Handlers {
-  [key: string]: (tilePos: { x: number; y: number }) => any;
+  [key: string]: (tilePos: Position) => any;
 }
 
 function eventIsMouseEvent(e: Event | MouseEvent): e is MouseEvent {
