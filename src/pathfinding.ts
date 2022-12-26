@@ -30,7 +30,7 @@ function findNeighbours(graph: GraphNode[][], node: GraphNode): GraphNode[] {
   if (graph[y] && graph[y][x + 1]) {
     neighbours.push(graph[y][x + 1]);
   }
-  if (graph[y - 1] && graph[y-1][x]) {
+  if (graph[y - 1] && graph[y - 1][x]) {
     neighbours.push(graph[y - 1][x]);
   }
   if (graph[y + 1] && graph[y + 1][x]) {
