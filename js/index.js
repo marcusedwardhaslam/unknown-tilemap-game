@@ -34,8 +34,6 @@ function draw(canvas, ctx) {
         clearScreen(canvas, ctx);
         // Render tiles
         renderMapGraphics(level, ctx);
-        // Render map (we want this on top of the tiles)
-        renderTileMap(ctx);
         const route = aStar(level, {
             x: 1,
             y: 0,
@@ -47,11 +45,12 @@ function draw(canvas, ctx) {
             x: node.x,
             y: node.y,
         })));
+        // Render map (we want this on top of the tiles)
+        renderTileMap(ctx);
         // Gameplay loop
     }, 1000 / 60);
 }
 function renderRoute(ctx, route) {
-    console.log(route);
     for (const node of route) {
         const { x, y } = node;
         ctx.fillStyle = '#94faff';

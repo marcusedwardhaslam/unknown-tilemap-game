@@ -22,7 +22,7 @@ export class Tile {
       case TileType.WATER:
         return '#94faff';
       default:
-        throw new Error('Unknown TileType in Tile.getGraphic()')
+        throw new Error(`Unknown TileType in Tile.getGraphic()... ${this.getType()}`)
     }
   }
 

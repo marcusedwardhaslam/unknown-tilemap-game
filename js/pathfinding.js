@@ -66,24 +66,17 @@ export function aStar(grid, beginning, end) {
     };
     const open = [start];
     while (open.length) {
-        let lowestPossibleIndex = 0;
-        for (let i = 0; i < open.length; i++) {
-            if (open[i].f < open[lowestPossibleIndex].f) {
-                lowestPossibleIndex = i;
-            }
-        }
-        const currentNode = open[lowestPossibleIndex];
+        const currentNode = open.sort((a, b) => a.f - b.f).splice(0, 1)[0];
+        // Path found... Return route.
         if (currentNode.x == end.x && currentNode.y == end.y) {
             let currentSearchNode = currentNode;
-            const route = [];
-            while (currentSearchNode.parent) {
+            const route = [start];
+            while (currentSearchNode.parent !== null) {
                 route.push(currentSearchNode);
                 currentSearchNode = currentSearchNode.parent;
             }
-            route.push(start);
             return route.reverse();
         }
-        open.splice(lowestPossibleIndex, 1);
         currentNode.closed = true;
         const neighbours = findNeighbours(graph, currentNode);
         for (const neighbour of neighbours) {
