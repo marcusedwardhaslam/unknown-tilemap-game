@@ -1,10 +1,10 @@
-import { getCanvas, getContext } from './canvas.js';
-import { registerEventListeners } from './controls.js';
 import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
-import { renderTileMapGrid } from './map.js';
-import { level } from './levels/1.js';
-import { TileType } from './tile.js';
 import { Enemy } from './entities/enemy.js';
+import { getCanvas, getContext } from './canvas.js';
+import { level } from './levels/1.js';
+import { registerEventListeners } from './controls.js';
+import { renderTileMapGrid } from './map.js';
+import { TileType } from './tile.js';
 function changeTileType({ x, y }) {
     const tile = level[x][y];
     const currentType = tile.getType();

@@ -1,12 +1,13 @@
-import { getCanvas, getContext } from './canvas.js';
-import { registerEventListeners } from './controls.js';
 import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
-import { renderTileMapGrid } from './map.js';
-import { level } from './levels/1.js';
-import { TileType } from './tile.js';
 import { Enemy } from './entities/enemy.js';
+import { getCanvas, getContext } from './canvas.js';
+import { level } from './levels/1.js';
+import { Position } from './pathfinding.js';
+import { registerEventListeners } from './controls.js';
+import { renderTileMapGrid } from './map.js';
+import { TileType } from './tile.js';
 
-function changeTileType({ x, y }: { x: number; y: number }) {
+function changeTileType({ x, y }: Position) {
   const tile = level[x][y];
   const currentType = tile.getType();
 
