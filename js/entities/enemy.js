@@ -1,6 +1,6 @@
-import { level } from "../levels/1.js";
-import { TILE_SIZE } from "../map.js";
-import { aStar } from "../pathfinding.js";
+import { level } from '../levels/1.js';
+import { TILE_SIZE } from '../map.js';
+import { aStar } from '../pathfinding.js';
 export class Enemy {
     constructor(x, y) {
         this.x = x;
@@ -9,7 +9,7 @@ export class Enemy {
         this.hp = 2;
         // This enemies current tick
         this.tick = 0;
-        // How many frames need to pass before 
+        // How many frames need to pass before
         this.tickRate = 6;
         // Best path to goal
         this.route = [];
@@ -22,7 +22,7 @@ export class Enemy {
     draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = 'green';
-        ctx.arc((this.x * TILE_SIZE) + (TILE_SIZE / 2), (this.y * TILE_SIZE) + (TILE_SIZE / 2), this.width / 2, 0, 360);
+        ctx.arc(this.x * TILE_SIZE + TILE_SIZE / 2, this.y * TILE_SIZE + TILE_SIZE / 2, this.width / 2, 0, 360);
         ctx.fill();
         ctx.closePath();
     }

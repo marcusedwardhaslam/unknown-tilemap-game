@@ -1,9 +1,13 @@
-import { Enemy } from "./entities/enemy.js";
-import { TILE_SIZE } from "./map.js";
-import { Tile } from "./tile.js";
+import { Enemy } from './entities/enemy.js';
+import { TILE_SIZE } from './map.js';
+import { Tile } from './tile.js';
 
-export function renderMapGraphics(mapState: Tile[][], ctx: CanvasRenderingContext2D) {
-  let x = 0, y = 0;
+export function renderMapGraphics(
+  mapState: Tile[][],
+  ctx: CanvasRenderingContext2D
+) {
+  let x = 0,
+    y = 0;
   for (const column of mapState) {
     for (const row of column) {
       ctx.fillStyle = row.getGraphic();
@@ -21,7 +25,10 @@ export function renderEnemies(ctx: CanvasRenderingContext2D, enemies: Enemy[]) {
   }
 }
 
-export function clearScreen(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+export function clearScreen(
+  canvas: HTMLCanvasElement,
+  ctx: CanvasRenderingContext2D
+) {
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'black';

@@ -1,6 +1,7 @@
-import { TILE_SIZE } from "./map.js";
+import { TILE_SIZE } from './map.js';
 function eventIsMouseEvent(e) {
-    return e.offsetX !== undefined && e.offsetY !== undefined;
+    return (e.offsetX !== undefined &&
+        e.offsetY !== undefined);
 }
 const convertClickToTilePosition = (e) => ({
     x: Math.floor(e.offsetY / TILE_SIZE),
@@ -8,7 +9,7 @@ const convertClickToTilePosition = (e) => ({
 });
 // TODO: Fix types
 export function registerEventListeners(canvas, handlers) {
-    Object.keys(handlers).forEach(key => {
+    Object.keys(handlers).forEach((key) => {
         canvas.addEventListener(key, function (e) {
             if (eventIsMouseEvent(e)) {
                 const tilePos = convertClickToTilePosition(e);

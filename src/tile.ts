@@ -22,7 +22,9 @@ export class Tile {
       case TileType.WATER:
         return '#94faff';
       default:
-        throw new Error(`Unknown TileType in Tile.getGraphic()... ${this.getType()}`)
+        throw new Error(
+          `Unknown TileType in Tile.getGraphic()... ${this.getType()}`
+        );
     }
   }
 
@@ -35,6 +37,10 @@ export class Tile {
   }
 
   isPath() {
-    return this.type === TileType.GOAL || this.type === TileType.START || this.type === TileType.SAND;
+    return (
+      this.type === TileType.GOAL ||
+      this.type === TileType.START ||
+      this.type === TileType.SAND
+    );
   }
 }

@@ -33,6 +33,8 @@ export class Tile {
         this.type = type;
     }
     isPath() {
-        return this.type === TileType.GOAL || this.type === TileType.START || this.type === TileType.SAND;
+        return (this.type === TileType.GOAL ||
+            this.type === TileType.START ||
+            this.type === TileType.SAND);
     }
 }

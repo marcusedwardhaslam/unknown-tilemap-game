@@ -1,4 +1,4 @@
-import { TILE_SIZE } from "./map.js";
+import { TILE_SIZE } from './map.js';
 export function renderMapGraphics(mapState, ctx) {
     let x = 0, y = 0;
     for (const column of mapState) {

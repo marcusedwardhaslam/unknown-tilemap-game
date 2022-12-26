@@ -1,4 +1,4 @@
-import { Tile, TileType } from "../tile.js";
+import { Tile, TileType } from '../tile.js';
 export const level = [
     [
         new Tile(TileType.GRASS),
@@ -679,5 +679,5 @@ export const level = [
         new Tile(TileType.GRASS),
         new Tile(TileType.GRASS),
         new Tile(TileType.GRASS),
-    ]
+    ],
 ];

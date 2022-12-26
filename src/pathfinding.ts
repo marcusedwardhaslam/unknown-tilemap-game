@@ -1,4 +1,4 @@
-import { Tile } from "./tile";
+import { Tile } from './tile';
 
 export interface Position {
   x: number;
@@ -16,8 +16,8 @@ interface GraphNode extends Position {
 }
 
 function manhattan(start: GraphNode, end: GraphNode) {
-  const d1 = Math.abs (end.x - start.x);
-  const d2 = Math.abs (end.y - start.y);
+  const d1 = Math.abs(end.x - start.x);
+  const d2 = Math.abs(end.y - start.y);
   return d1 + d2;
 }
 
@@ -127,6 +127,6 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
       }
     }
   }
-  
+
   return [];
 }

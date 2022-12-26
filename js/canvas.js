@@ -1,4 +1,4 @@
-import { MAP_HEIGHT, MAP_WIDTH } from "./map.js";
+import { MAP_HEIGHT, MAP_WIDTH } from './map.js';
 const CANVAS_ID = 'canvas';
 const CONTEXT = '2d';
 function htmlElementIsCanvas(element) {

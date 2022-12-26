@@ -54,7 +54,7 @@ function main() {
     const canvas = getCanvas();
     const context = getContext(canvas);
     registerEventListeners(canvas, {
-        'click': changeTileType,
+        click: changeTileType,
     });
     draw(canvas, context);
 }
