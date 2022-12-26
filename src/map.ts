@@ -4,7 +4,7 @@ export const TILE_SIZE = 32;
 export const MAP_HEIGHT = MAP_ROWS * TILE_SIZE;
 export const MAP_WIDTH = MAP_COLUMNS * TILE_SIZE;
 
-export function renderTileMap(ctx: CanvasRenderingContext2D): void {
+export function renderTileMapGrid(ctx: CanvasRenderingContext2D): void {
   ctx.setLineDash([1, 2]);
   ctx.fillStyle = 'black';
 

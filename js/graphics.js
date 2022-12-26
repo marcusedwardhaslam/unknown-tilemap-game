@@ -11,3 +11,13 @@ export function renderMapGraphics(mapState, ctx) {
         y += TILE_SIZE;
     }
 }
+export function renderEnemies(ctx, enemies) {
+    for (const enemy of enemies) {
+        enemy.draw(ctx);
+    }
+}
+export function clearScreen(canvas, ctx) {
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'black';
+}
