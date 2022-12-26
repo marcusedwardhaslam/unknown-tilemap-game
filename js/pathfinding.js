@@ -40,7 +40,7 @@ function initGraph(grid) {
     }
     return graph;
 }
-export function aStar(grid, start, end) {
+export function aStar(grid, beginning, end) {
     const graph = initGraph(grid);
     const goal = {
         x: end.x,
@@ -53,17 +53,18 @@ export function aStar(grid, start, end) {
         closed: false,
         visited: false,
     };
-    const open = [{
-            x: start.x,
-            y: start.y,
-            g: 0,
-            f: 0,
-            h: 0,
-            tile: grid[start.y][start.x],
-            parent: null,
-            closed: false,
-            visited: false,
-        }];
+    const start = {
+        x: beginning.x,
+        y: beginning.y,
+        g: 0,
+        f: 0,
+        h: 0,
+        tile: grid[beginning.y][beginning.x],
+        parent: null,
+        closed: false,
+        visited: false,
+    };
+    const open = [start];
     while (open.length) {
         let lowestPossibleIndex = 0;
         for (let i = 0; i < open.length; i++) {
@@ -79,6 +80,7 @@ export function aStar(grid, start, end) {
                 route.push(currentSearchNode);
                 currentSearchNode = currentSearchNode.parent;
             }
+            route.push(start);
             return route.reverse();
         }
         open.splice(lowestPossibleIndex, 1);

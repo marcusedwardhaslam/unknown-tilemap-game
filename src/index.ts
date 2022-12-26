@@ -1,7 +1,7 @@
 import { getCanvas, getContext } from './canvas.js';
 import { registerEventListeners } from './controls.js';
 import { renderMapGraphics } from './graphics.js';
-import { renderTileMap } from './map.js';
+import { renderTileMap, TILE_SIZE } from './map.js';
 import { level } from './levels/2.js';
 import { TileType } from './tile.js';
 import { aStar } from './pathfinding.js';
@@ -28,7 +28,6 @@ function changeTileType({row, column}: {row: number, column: number}) {
   }
 }
 
-let redrawn = false;
 function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
   setTimeout(() => {
     requestAnimationFrame(() => {
@@ -52,11 +51,21 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
       y: 18,
     });
 
-    for (const node of route) {
-      node.tile.setType(TileType.WATER);
-    }
+    renderRoute(ctx, route.map(node => ({
+      x: node.x,
+      y: node.y,
+    })));
     // Gameplay loop
   }, 1000 / 60);
+}
+
+function renderRoute(ctx: CanvasRenderingContext2D, route: {x: number, y: number}[]) {
+  console.log(route);
+  for (const node of route) {
+    const { x, y } = node;
+    ctx.fillStyle = '#94faff';
+    ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+  }
 }
 
 function clearScreen(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {

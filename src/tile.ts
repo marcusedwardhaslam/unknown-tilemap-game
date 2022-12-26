@@ -20,7 +20,7 @@ export class Tile {
       case TileType.START:
         return '#8e1010';
       case TileType.WATER:
-        return '#0000FF';
+        return '#94faff';
       default:
         throw new Error('Unknown TileType in Tile.getGraphic()')
     }
