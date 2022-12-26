@@ -1,6 +1,6 @@
 import { Tile } from "./tile";
 
-interface Position {
+export interface Position {
   x: number;
   y: number;
 }
@@ -105,7 +105,7 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
     const neighbours = findNeighbours(graph, currentNode);
     for (const neighbour of neighbours) {
       if (neighbour.closed || !neighbour.tile.isPath()) {
-          continue;
+        continue;
       }
 
       const gScore = currentNode.g + 1;
