@@ -59,7 +59,7 @@ function main() {
     const context = getContext(canvas);
     registerEventListeners(canvas, {
         'click': changeTileType,
-    });
+    }, MAP_STATE);
     draw(canvas, context);
 }
 (() => {
