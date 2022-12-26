@@ -92,7 +92,7 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
     // Path found... Return route.
     if (currentNode.x == end.x && currentNode.y == end.y) {
       let currentSearchNode = currentNode;
-      const route: GraphNode[] = [start];
+      const route: GraphNode[] = [];
       while (currentSearchNode.parent !== null) {
         route.push(currentSearchNode);
         currentSearchNode = currentSearchNode.parent;

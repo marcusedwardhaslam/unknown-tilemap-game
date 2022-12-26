@@ -3,10 +3,11 @@ function eventIsMouseEvent(e) {
     return e.offsetX !== undefined && e.offsetY !== undefined;
 }
 const convertClickToTilePosition = (e) => ({
-    row: Math.floor(e.offsetY / TILE_SIZE),
-    column: Math.floor(e.offsetX / TILE_SIZE),
+    x: Math.floor(e.offsetY / TILE_SIZE),
+    y: Math.floor(e.offsetX / TILE_SIZE),
 });
-export function registerEventListeners(canvas, handlers, mapState) {
+// TODO: Fix types
+export function registerEventListeners(canvas, handlers) {
     Object.keys(handlers).forEach(key => {
         canvas.addEventListener(key, function (e) {
             if (eventIsMouseEvent(e)) {
@@ -14,10 +15,5 @@ export function registerEventListeners(canvas, handlers, mapState) {
                 handlers[key](tilePos);
             }
         });
-    });
-    document.addEventListener('keydown', (event) => {
-        if (event.keyCode === 13) {
-            console.log({ mapState });
-        }
     });
 }

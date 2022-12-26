@@ -1,5 +1,5 @@
-import { TILE_SIZE } from "./map";
-import { Position } from "./pathfinding";
+import { TILE_SIZE } from "./map.js";
+import { Position } from "./pathfinding.js";
 
 export function renderRoute(ctx: CanvasRenderingContext2D, route: Position[]) {
   for (const node of route) {

@@ -28,9 +28,11 @@ export class Enemy {
     }
     updatePosition() {
         const nextPosition = this.route.splice(0, 1)[0];
-        this.x = nextPosition.x;
-        this.y = nextPosition.y;
-        this.tick = 0;
+        if (nextPosition) {
+            this.x = nextPosition.x;
+            this.y = nextPosition.y;
+            this.tick = 0;
+        }
     }
     // TODO: Dynamically get destination from map
     updateRoute() {

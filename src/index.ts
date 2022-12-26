@@ -6,8 +6,8 @@ import { level } from './levels/1.js';
 import { TileType } from './tile.js';
 import { Enemy } from './entities/enemy.js';
 
-function changeTileType({row, column}: {row: number, column: number}) {
-  const tile = level[row][column];
+function changeTileType({x, y}: {x: number, y: number}) {
+  const tile = level[x][y];
   const currentType = tile.getType();
 
   switch(currentType) {
@@ -67,7 +67,7 @@ function main() {
   const context = getContext(canvas);
   registerEventListeners(canvas, {
     'click': changeTileType,
-  }, level);
+  });
   draw(canvas, context);
 }
 

@@ -5,8 +5,8 @@ import { renderTileMapGrid } from './map.js';
 import { level } from './levels/1.js';
 import { TileType } from './tile.js';
 import { Enemy } from './entities/enemy.js';
-function changeTileType({ row, column }) {
-    const tile = level[row][column];
+function changeTileType({ x, y }) {
+    const tile = level[x][y];
     const currentType = tile.getType();
     switch (currentType) {
         case TileType.GRASS:
@@ -55,7 +55,7 @@ function main() {
     const context = getContext(canvas);
     registerEventListeners(canvas, {
         'click': changeTileType,
-    }, level);
+    });
     draw(canvas, context);
 }
 (() => {

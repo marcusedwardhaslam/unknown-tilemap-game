@@ -5,13 +5,14 @@ function eventIsMouseEvent(e: Event | MouseEvent): e is MouseEvent {
 }
 
 const convertClickToTilePosition = (e: MouseEvent) => ({
-  row: Math.floor(e.offsetY / TILE_SIZE),
-  column: Math.floor(e.offsetX / TILE_SIZE),
+  x: Math.floor(e.offsetY / TILE_SIZE),
+  y: Math.floor(e.offsetX / TILE_SIZE),
 });
 
+// TODO: Fix types
 export function registerEventListeners(canvas: HTMLCanvasElement, handlers: {
-  [key: string]: (tilePos: { row: number, column: number }) => void,
-}, mapState: any) {
+  [key: string]: (tilePos: { x: number, y: number }) => void,
+}) {
   Object.keys(handlers).forEach(key => {
     canvas.addEventListener(key, function (e: Event) {
       if (eventIsMouseEvent(e)) {
@@ -20,9 +21,4 @@ export function registerEventListeners(canvas: HTMLCanvasElement, handlers: {
       }
     });
   });
-  document.addEventListener('keydown', (event) => {
-    if (event.keyCode === 13) {
-      console.log({mapState})
-    }
-  })
 }

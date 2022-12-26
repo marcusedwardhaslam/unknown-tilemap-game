@@ -70,7 +70,7 @@ export function aStar(grid, beginning, end) {
         // Path found... Return route.
         if (currentNode.x == end.x && currentNode.y == end.y) {
             let currentSearchNode = currentNode;
-            const route = [start];
+            const route = [];
             while (currentSearchNode.parent !== null) {
                 route.push(currentSearchNode);
                 currentSearchNode = currentSearchNode.parent;
