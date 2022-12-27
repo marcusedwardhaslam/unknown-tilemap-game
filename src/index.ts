@@ -6,6 +6,8 @@ import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
 import { TileType } from './tile.js';
+import { Zombie } from './entities/zombie.js';
+import { Creeper } from './entities/creeper.js';
 
 function changeTileType({ x, y }: Position) {
   const tile = level[x][y];
@@ -29,7 +31,7 @@ function changeTileType({ x, y }: Position) {
   }
 }
 
-const enemies: Enemy[] = [new Enemy(1, 0)];
+const enemies: Enemy[] = [new Zombie({x: 1, y: 0}), new Creeper({x: 1, y: 0})];
 
 function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
   setTimeout(() => {

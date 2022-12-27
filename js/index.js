@@ -1,10 +1,11 @@
 import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
-import { Enemy } from './entities/enemy.js';
 import { getCanvas, getContext } from './canvas.js';
 import { level } from './levels/1.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
 import { TileType } from './tile.js';
+import { Zombie } from './entities/zombie.js';
+import { Creeper } from './entities/creeper.js';
 function changeTileType({ x, y }) {
     const tile = level[x][y];
     const currentType = tile.getType();
@@ -25,7 +26,7 @@ function changeTileType({ x, y }) {
             break;
     }
 }
-const enemies = [new Enemy(1, 0)];
+const enemies = [new Zombie({ x: 1, y: 0 }), new Creeper({ x: 1, y: 0 })];
 function draw(canvas, ctx) {
     setTimeout(() => {
         requestAnimationFrame(() => {

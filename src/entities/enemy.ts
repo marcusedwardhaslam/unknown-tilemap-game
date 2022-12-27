@@ -1,23 +1,20 @@
-import { level } from '../levels/1.js';
-import { TILE_SIZE } from '../map.js';
-import { aStar, Position } from '../pathfinding.js';
+import { level } from "../levels/1.js";
+import { TILE_SIZE } from "../map.js";
+import { aStar, Position } from "../pathfinding.js";
 
 export class Enemy {
-  private name = 'zombie';
-  private hp = 2;
-
   // This enemies current tick
-  private tick = 0;
+  protected tick = 0;
   // How many frames need to pass before
-  private tickRate = 6;
+  protected tickRate = 2;
 
-  // Best path to goal
-  private route: Position[] = [];
+  protected route: Position[] = [];
 
   // graphics
-  private width = 16;
+  protected width = 16;
+  protected fillStyle = 'grey';
 
-  constructor(private x: number, private y: number) {}
+  constructor(protected pos: Position) {}
 
   public setRoute(route: Position[]) {
     this.route = route;
@@ -25,10 +22,10 @@ export class Enemy {
 
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.beginPath();
-    ctx.fillStyle = 'green';
+    ctx.fillStyle = this.fillStyle;
     ctx.arc(
-      this.x * TILE_SIZE + TILE_SIZE / 2,
-      this.y * TILE_SIZE + TILE_SIZE / 2,
+      this.pos.x * TILE_SIZE + TILE_SIZE / 2,
+      this.pos.y * TILE_SIZE + TILE_SIZE / 2,
       this.width / 2,
       0,
       360
@@ -37,22 +34,22 @@ export class Enemy {
     ctx.closePath();
   }
 
-  private updatePosition() {
+  protected updatePosition() {
     const nextPosition = this.route.splice(0, 1)[0];
     if (nextPosition) {
-      this.x = nextPosition.x;
-      this.y = nextPosition.y;
+      this.pos.x = nextPosition.x;
+      this.pos.y = nextPosition.y;
       this.tick = 0;
     }
   }
 
   // TODO: Dynamically get destination from map
-  private updateRoute() {
+  protected updateRoute() {
     const route = aStar(
       level,
       {
-        x: this.x,
-        y: this.y,
+        x: this.pos.x,
+        y: this.pos.y,
       },
       {
         x: 31,
