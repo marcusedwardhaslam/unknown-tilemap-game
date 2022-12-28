@@ -1,6 +1,6 @@
-import { level } from "../levels/1.js";
-import { TILE_SIZE } from "../map.js";
-import { aStar } from "../pathfinding.js";
+import { level } from '../levels/1.js';
+import { TILE_SIZE } from '../map.js';
+import { aStar } from '../pathfinding.js';
 export class Enemy {
     constructor(pos) {
         this.pos = pos;
@@ -12,16 +12,21 @@ export class Enemy {
         // graphics
         this.width = 16;
         this.fillStyle = 'grey';
+        this.image = new Image();
     }
     setRoute(route) {
         this.route = route;
     }
     draw(ctx) {
-        ctx.beginPath();
-        ctx.fillStyle = this.fillStyle;
-        ctx.arc(this.pos.x * TILE_SIZE + TILE_SIZE / 2, this.pos.y * TILE_SIZE + TILE_SIZE / 2, this.width / 2, 0, 360);
-        ctx.fill();
-        ctx.closePath();
+        if (this.image.src === '') {
+            ctx.beginPath();
+            ctx.fillStyle = this.fillStyle;
+            ctx.arc(this.pos.x * TILE_SIZE + TILE_SIZE / 2, this.pos.y * TILE_SIZE + TILE_SIZE / 2, this.width / 2, 0, 360);
+            ctx.fill();
+            ctx.closePath();
+            return;
+        }
+        ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
     }
     updatePosition() {
         const nextPosition = this.route.splice(0, 1)[0];

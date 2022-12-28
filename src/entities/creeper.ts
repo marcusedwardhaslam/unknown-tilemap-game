@@ -1,3 +1,4 @@
+import { Position } from '../pathfinding.js';
 import { Enemy } from './enemy.js';
 
 export class Creeper extends Enemy {
@@ -7,4 +8,9 @@ export class Creeper extends Enemy {
 
   // How many frames need to pass before
   protected tickRate = 3;
+
+  constructor(pos: Position) {
+    super(pos);
+    this.image.src = 'assets/creeper.png';
+  }
 }

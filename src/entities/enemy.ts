@@ -1,6 +1,6 @@
-import { level } from "../levels/1.js";
-import { TILE_SIZE } from "../map.js";
-import { aStar, Position } from "../pathfinding.js";
+import { level } from '../levels/1.js';
+import { TILE_SIZE } from '../map.js';
+import { aStar, Position } from '../pathfinding.js';
 
 export class Enemy {
   // This enemies current tick
@@ -13,6 +13,7 @@ export class Enemy {
   // graphics
   protected width = 16;
   protected fillStyle = 'grey';
+  protected image = new Image();
 
   constructor(protected pos: Position) {}
 
@@ -21,17 +22,22 @@ export class Enemy {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    ctx.beginPath();
-    ctx.fillStyle = this.fillStyle;
-    ctx.arc(
-      this.pos.x * TILE_SIZE + TILE_SIZE / 2,
-      this.pos.y * TILE_SIZE + TILE_SIZE / 2,
-      this.width / 2,
-      0,
-      360
-    );
-    ctx.fill();
-    ctx.closePath();
+    if (this.image.src === '') {
+      ctx.beginPath();
+      ctx.fillStyle = this.fillStyle;
+      ctx.arc(
+        this.pos.x * TILE_SIZE + TILE_SIZE / 2,
+        this.pos.y * TILE_SIZE + TILE_SIZE / 2,
+        this.width / 2,
+        0,
+        360
+      );
+      ctx.fill();
+      ctx.closePath();
+      return;
+    }
+
+    ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
   }
 
   protected updatePosition() {
