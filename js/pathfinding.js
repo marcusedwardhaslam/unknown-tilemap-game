@@ -1,6 +1,6 @@
 function manhattan(start, end) {
-    const d1 = Math.abs(end.x - start.x);
-    const d2 = Math.abs(end.y - start.y);
+    const d1 = Math.abs(start.x - end.x);
+    const d2 = Math.abs(start.y - end.y);
     return d1 + d2;
 }
 function findNeighbours(graph, node) {

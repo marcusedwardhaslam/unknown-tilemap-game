@@ -1,3 +1,4 @@
+import { Level } from '../levels/manager.js';
 import { Position } from '../pathfinding.js';
 import { Enemy } from './enemy.js';
 
@@ -11,8 +12,8 @@ export class Zombie extends Enemy {
 
   protected image = new Image();
 
-  constructor(pos: Position) {
-    super(pos);
+  constructor(pos: Position, level: Level) {
+    super(pos, level);
     this.image.src = 'assets/zombie.png';
   }
 }

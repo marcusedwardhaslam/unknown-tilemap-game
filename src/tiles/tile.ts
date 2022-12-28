@@ -86,7 +86,12 @@ export class Tile {
       this.type === TileType.BOTTOM_LEFT_CORNER_PATH ||
       this.type === TileType.BOTTOM_RIGHT_CORNER_PATH ||
       this.type === TileType.VERTICAL_PATH ||
-      this.type === TileType.HORIZONTAL_PATH
+      this.type === TileType.HORIZONTAL_PATH ||
+      this.type === TileType.PATH ||
+      this.type === TileType.BOTTOM_EDGE_PATH ||
+      this.type === TileType.RIGHT_EDGE_PATH ||
+      this.type === TileType.TOP_EDGE_PATH ||
+      this.type === TileType.LEFT_EDGE_PATH
     );
   }
 }

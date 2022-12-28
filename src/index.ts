@@ -1,21 +1,17 @@
 import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
 import { Enemy } from './entities/enemy.js';
 import { getCanvas, getContext } from './canvas.js';
-import { level } from './levels/1.js';
 import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
-import { renderTileMapGrid } from './map.js';
 import { Zombie } from './entities/zombie.js';
 import { Creeper } from './entities/creeper.js';
+import { Level, level, loadLevel } from './levels/manager.js';
 
 function changeTileType(pos: Position) {
   console.log(pos);
 }
 
-const enemies: Enemy[] = [
-  new Zombie({ x: 1, y: 0 }),
-  new Creeper({ x: 1, y: 0 }),
-];
+const enemies: Enemy[] = [];
 
 function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
   setTimeout(() => {
@@ -34,11 +30,10 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 
     // Render player game objects
 
-    // // Render tile map grid(we want this on top of the tiles)
-    // renderTileMapGrid(ctx);
-
     // Gameplay loop
-    playGame(enemies);
+    if (enemies[1].getRoute().length <= 0) {
+      playGame(enemies);
+    }
   }, 1000 / 60);
 }
 
@@ -49,15 +44,28 @@ function playGame(enemies: Enemy[]) {
   }
 }
 
-function main() {
+function makeEnemies(level: Level) {
+  enemies.push(new Zombie({ x: 1, y: 0 }, level));
+  enemies.push(new Creeper({ x: 1, y: 0 }, level));
+}
+
+async function main() {
+  const level = await loadLevel();
+
   const canvas = getCanvas();
   const context = getContext(canvas);
+
+  makeEnemies(level);
+
   registerEventListeners(canvas, {
     click: changeTileType,
   });
+
   draw(canvas, context);
 }
 
 (() => {
-  main();
+  main()
+    .then(() => console.log('done'))
+    .catch(console.error);
 })();

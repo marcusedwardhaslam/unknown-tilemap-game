@@ -1,7 +1,7 @@
 import { Enemy } from './enemy.js';
 export class Creeper extends Enemy {
-    constructor(pos) {
-        super(pos);
+    constructor(pos, level) {
+        super(pos, level);
         this.name = 'creeper';
         this.hp = 2;
         this.fillStyle = 'blue';

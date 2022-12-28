@@ -1,9 +1,10 @@
-import { level } from '../levels/1.js';
+import { renderRoute } from '../debug.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar } from '../pathfinding.js';
 export class Enemy {
-    constructor(pos) {
+    constructor(pos, level) {
         this.pos = pos;
+        this.level = level;
         // This enemies current tick
         this.tick = 0;
         // How many frames need to pass before
@@ -17,6 +18,9 @@ export class Enemy {
     setRoute(route) {
         this.route = route;
     }
+    getRoute() {
+        return this.route;
+    }
     draw(ctx) {
         if (this.image.src === '') {
             ctx.beginPath();
@@ -27,6 +31,7 @@ export class Enemy {
             return;
         }
         ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
+        renderRoute(ctx, this.route, '#234787');
     }
     updatePosition() {
         const nextPosition = this.route.splice(0, 1)[0];
@@ -38,7 +43,7 @@ export class Enemy {
     }
     // TODO: Dynamically get destination from map
     updateRoute() {
-        const route = aStar(level, {
+        const route = aStar(this.level, {
             x: this.pos.x,
             y: this.pos.y,
         }, {

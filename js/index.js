@@ -1,16 +1,22 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
 import { getCanvas, getContext } from './canvas.js';
-import { level } from './levels/1.js';
 import { registerEventListeners } from './controls.js';
 import { Zombie } from './entities/zombie.js';
 import { Creeper } from './entities/creeper.js';
+import { level, loadLevel } from './levels/manager.js';
 function changeTileType(pos) {
     console.log(pos);
 }
-const enemies = [
-    new Zombie({ x: 1, y: 0 }),
-    new Creeper({ x: 1, y: 0 }),
-];
+const enemies = [];
 function draw(canvas, ctx) {
     setTimeout(() => {
         requestAnimationFrame(() => {
@@ -23,10 +29,10 @@ function draw(canvas, ctx) {
         // Render enemy game objects
         renderEnemies(ctx, enemies);
         // Render player game objects
-        // // Render tile map grid(we want this on top of the tiles)
-        // renderTileMapGrid(ctx);
         // Gameplay loop
-        playGame(enemies);
+        if (enemies[1].getRoute().length <= 0) {
+            playGame(enemies);
+        }
     }, 1000 / 60);
 }
 // TODO: Refactor - Move to appropriate file.
@@ -35,14 +41,24 @@ function playGame(enemies) {
         enemy.update();
     }
 }
+function makeEnemies(level) {
+    enemies.push(new Zombie({ x: 1, y: 0 }, level));
+    enemies.push(new Creeper({ x: 1, y: 0 }, level));
+}
 function main() {
-    const canvas = getCanvas();
-    const context = getContext(canvas);
-    registerEventListeners(canvas, {
-        click: changeTileType,
+    return __awaiter(this, void 0, void 0, function* () {
+        const level = yield loadLevel();
+        const canvas = getCanvas();
+        const context = getContext(canvas);
+        makeEnemies(level);
+        registerEventListeners(canvas, {
+            click: changeTileType,
+        });
+        draw(canvas, context);
     });
-    draw(canvas, context);
 }
 (() => {
-    main();
+    main()
+        .then(() => console.log('done'))
+        .catch(console.error);
 })();

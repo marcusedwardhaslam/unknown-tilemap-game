@@ -1,4 +1,5 @@
-import { level } from '../levels/1.js';
+import { renderRoute } from '../debug.js';
+import { Level } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar, Position } from '../pathfinding.js';
 
@@ -15,10 +16,14 @@ export class Enemy {
   protected fillStyle = 'grey';
   protected image = new Image();
 
-  constructor(protected pos: Position) {}
+  constructor(protected pos: Position, protected level: Level) {}
 
   public setRoute(route: Position[]) {
     this.route = route;
+  }
+
+  public getRoute() {
+    return this.route;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -38,6 +43,7 @@ export class Enemy {
     }
 
     ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
+    renderRoute(ctx, this.route, '#234787');
   }
 
   protected updatePosition() {
@@ -52,7 +58,7 @@ export class Enemy {
   // TODO: Dynamically get destination from map
   protected updateRoute() {
     const route = aStar(
-      level,
+      this.level,
       {
         x: this.pos.x,
         y: this.pos.y,
