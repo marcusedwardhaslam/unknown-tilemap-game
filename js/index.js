@@ -2,31 +2,15 @@ import { clearScreen, renderEnemies, renderMapGraphics } from './graphics.js';
 import { getCanvas, getContext } from './canvas.js';
 import { level } from './levels/1.js';
 import { registerEventListeners } from './controls.js';
-import { renderTileMapGrid } from './map.js';
-import { TileType } from './tile.js';
 import { Zombie } from './entities/zombie.js';
 import { Creeper } from './entities/creeper.js';
-function changeTileType({ x, y }) {
-    const tile = level[x][y];
-    const currentType = tile.getType();
-    switch (currentType) {
-        case TileType.GRASS:
-            tile.setType(TileType.SAND);
-            break;
-        case TileType.SAND:
-            tile.setType(TileType.START);
-            break;
-        case TileType.START:
-            tile.setType(TileType.GOAL);
-            break;
-        case TileType.GOAL:
-            tile.setType(TileType.GRASS);
-            break;
-        default:
-            break;
-    }
+function changeTileType(pos) {
+    console.log(pos);
 }
-const enemies = [new Zombie({ x: 1, y: 0 }), new Creeper({ x: 1, y: 0 })];
+const enemies = [
+    new Zombie({ x: 1, y: 0 }),
+    new Creeper({ x: 1, y: 0 }),
+];
 function draw(canvas, ctx) {
     setTimeout(() => {
         requestAnimationFrame(() => {
@@ -39,8 +23,8 @@ function draw(canvas, ctx) {
         // Render enemy game objects
         renderEnemies(ctx, enemies);
         // Render player game objects
-        // Render tile map grid(we want this on top of the tiles)
-        renderTileMapGrid(ctx);
+        // // Render tile map grid(we want this on top of the tiles)
+        // renderTileMapGrid(ctx);
         // Gameplay loop
         playGame(enemies);
     }, 1000 / 60);

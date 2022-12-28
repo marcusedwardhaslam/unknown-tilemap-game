@@ -1,4 +1,4 @@
-import { Tile } from './tile';
+import { Tile } from './tiles/tile';
 
 export interface Position {
   x: number;
