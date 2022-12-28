@@ -11,6 +11,11 @@ export var TileType;
     TileType[TileType["BOTTOM_RIGHT_CORNER_PATH"] = 7] = "BOTTOM_RIGHT_CORNER_PATH";
     TileType[TileType["VERTICAL_PATH"] = 8] = "VERTICAL_PATH";
     TileType[TileType["HORIZONTAL_PATH"] = 9] = "HORIZONTAL_PATH";
+    TileType[TileType["PATH"] = 10] = "PATH";
+    TileType[TileType["BOTTOM_EDGE_PATH"] = 11] = "BOTTOM_EDGE_PATH";
+    TileType[TileType["RIGHT_EDGE_PATH"] = 12] = "RIGHT_EDGE_PATH";
+    TileType[TileType["TOP_EDGE_PATH"] = 13] = "TOP_EDGE_PATH";
+    TileType[TileType["LEFT_EDGE_PATH"] = 14] = "LEFT_EDGE_PATH";
 })(TileType || (TileType = {}));
 export class Tile {
     constructor(type) {
@@ -46,6 +51,21 @@ export class Tile {
                 break;
             case TileType.HORIZONTAL_PATH:
                 this.image.src = `${config.assets.path}/horizontalPath.png`;
+                break;
+            case TileType.PATH:
+                this.image.src = `${config.assets.path}/path.png`;
+                break;
+            case TileType.BOTTOM_EDGE_PATH:
+                this.image.src = `${config.assets.path}/bottomEdgePath.png`;
+                break;
+            case TileType.RIGHT_EDGE_PATH:
+                this.image.src = `${config.assets.path}/rightEdgePath.png`;
+                break;
+            case TileType.TOP_EDGE_PATH:
+                this.image.src = `${config.assets.path}/topEdgePath.png`;
+                break;
+            case TileType.LEFT_EDGE_PATH:
+                this.image.src = `${config.assets.path}/leftEdgePath.png`;
                 break;
             default:
                 throw new Error(`Unknown TileType in Tile constructor... ${type}`);

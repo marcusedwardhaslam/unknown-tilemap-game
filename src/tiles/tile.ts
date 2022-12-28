@@ -11,6 +11,11 @@ export enum TileType {
   BOTTOM_RIGHT_CORNER_PATH,
   VERTICAL_PATH,
   HORIZONTAL_PATH,
+  PATH,
+  BOTTOM_EDGE_PATH,
+  RIGHT_EDGE_PATH,
+  TOP_EDGE_PATH,
+  LEFT_EDGE_PATH,
 }
 
 export class Tile {
@@ -47,6 +52,21 @@ export class Tile {
         break;
       case TileType.HORIZONTAL_PATH:
         this.image.src = `${config.assets.path}/horizontalPath.png`;
+        break;
+      case TileType.PATH:
+        this.image.src = `${config.assets.path}/path.png`;
+        break;
+      case TileType.BOTTOM_EDGE_PATH:
+        this.image.src = `${config.assets.path}/bottomEdgePath.png`;
+        break;
+      case TileType.RIGHT_EDGE_PATH:
+        this.image.src = `${config.assets.path}/rightEdgePath.png`;
+        break;
+      case TileType.TOP_EDGE_PATH:
+        this.image.src = `${config.assets.path}/topEdgePath.png`;
+        break;
+      case TileType.LEFT_EDGE_PATH:
+        this.image.src = `${config.assets.path}/leftEdgePath.png`;
         break;
       default:
         throw new Error(`Unknown TileType in Tile constructor... ${type}`);
