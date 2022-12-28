@@ -6,6 +6,7 @@ import { registerEventListeners } from './controls.js';
 import { Zombie } from './entities/zombie.js';
 import { Creeper } from './entities/creeper.js';
 import { Level, level, loadLevel } from './levels/manager.js';
+import { renderTileMapGrid } from './map.js';
 
 function changeTileType(pos: Position) {
   console.log(pos);
@@ -29,11 +30,10 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     renderEnemies(ctx, enemies);
 
     // Render player game objects
+    renderTileMapGrid(ctx);
 
     // Gameplay loop
-    if (enemies[1].getRoute().length <= 0) {
-      playGame(enemies);
-    }
+    playGame(enemies);
   }, 1000 / 60);
 }
 
@@ -66,6 +66,6 @@ async function main() {
 
 (() => {
   main()
-    .then(() => console.log('done'))
+    .then(() => console.log('All loaded'))
     .catch(console.error);
 })();

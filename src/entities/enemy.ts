@@ -1,4 +1,3 @@
-import { renderRoute } from '../debug.js';
 import { Level } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar, Position } from '../pathfinding.js';
@@ -43,7 +42,6 @@ export class Enemy {
     }
 
     ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
-    renderRoute(ctx, this.route, '#234787');
   }
 
   protected updatePosition() {
