@@ -108,10 +108,22 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
   const open: GraphNode[] = [start];
 
   while (open.length) {
-    const current = open.sort((a, b) => a.f - b.f).splice(0, 1)[0];
+    const orderedOpen = open.sort((a, b) => a.f - b.f || a.h - b.h);
+    let current;
+    const nodesWithLowestFScore = orderedOpen.filter(
+      (node) => node.f === orderedOpen[0].f
+    );
+    if (nodesWithLowestFScore.length > 0) {
+      current = orderedOpen.splice(
+        Math.floor(Math.random() * nodesWithLowestFScore.length),
+        1
+      )[0];
+    } else {
+      current = orderedOpen.splice(0, 1)[0];
+    }
 
-    // Path found... Return route.
     if (current.x == end.x && current.y == end.y) {
+      // Path found... Return route.
       let currentSearchNode = current;
       const route: GraphNode[] = [];
       while (currentSearchNode.parent !== null) {

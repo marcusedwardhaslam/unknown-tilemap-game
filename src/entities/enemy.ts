@@ -1,3 +1,5 @@
+import config from '../config.js';
+import { renderRoute } from '../debug.js';
 import { Level } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar, Position } from '../pathfinding.js';
@@ -14,8 +16,23 @@ export class Enemy {
   protected width = 16;
   protected fillStyle = 'grey';
   protected image = new Image();
+  protected hitSound: HTMLAudioElement = new Audio(
+    'assets/sounds/zombiehit.wav'
+  );
+  protected deathSound: HTMLAudioElement = new Audio(
+    'assets/sounds/zombiedeath.wav'
+  );
 
-  constructor(protected pos: Position, protected level: Level) {}
+  protected hp = 0;
+  protected dead = false;
+
+  constructor(protected pos: Position, protected level: Level) {
+    this.updateRoute();
+  }
+
+  public isDead(): boolean {
+    return this.dead;
+  }
 
   public setRoute(route: Position[]) {
     this.route = route;
@@ -23,6 +40,19 @@ export class Enemy {
 
   public getRoute() {
     return this.route;
+  }
+
+  public getPos(): Position {
+    return this.pos;
+  }
+
+  public hit(): void {
+    this.hitSound.play();
+  }
+
+  public die(): void {
+    this.deathSound.play();
+    this.dead = true;
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -41,6 +71,9 @@ export class Enemy {
       return;
     }
 
+    if (config.debug) {
+      renderRoute(ctx, this.route, 'rgba(255, 255, 255, 0.1)');
+    }
     ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
   }
 
@@ -69,10 +102,20 @@ export class Enemy {
     this.route = route;
   }
 
+  public takeDamage(damage: number) {
+    if (damage <= 0) {
+      return;
+    }
+    this.hit();
+    this.hp -= damage;
+    if (this.hp < 0) {
+      this.die();
+    }
+  }
+
   public update() {
     this.tick += 1;
     if (this.tick > this.tickRate) {
-      this.updateRoute();
       this.updatePosition();
     }
   }

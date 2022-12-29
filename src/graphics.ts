@@ -1,4 +1,5 @@
 import { Enemy } from './entities/enemy.js';
+import { Turret } from './entities/turret.js';
 import { TILE_SIZE } from './map.js';
 import { Tile } from './tiles/tile.js';
 
@@ -21,6 +22,15 @@ export function renderMapGraphics(
 export function renderEnemies(ctx: CanvasRenderingContext2D, enemies: Enemy[]) {
   for (const enemy of enemies) {
     enemy.draw(ctx);
+  }
+}
+
+export function renderPlayerTurrets(
+  ctx: CanvasRenderingContext2D,
+  turrets: Turret[]
+) {
+  for (const turret of turrets) {
+    turret.draw(ctx);
   }
 }
 

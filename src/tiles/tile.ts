@@ -24,49 +24,49 @@ export class Tile {
   constructor(protected type: TileType) {
     switch (type) {
       case TileType.GOAL:
-        this.image.src = `${config.assets.path}/chest.png`;
+        this.image.src = `${config.assets.path}/images/chest.png`;
         break;
       case TileType.GRASS:
-        this.image.src = `${config.assets.path}/grass.png`;
+        this.image.src = `${config.assets.path}/images/grass.png`;
         break;
       case TileType.START:
-        this.image.src = `${config.assets.path}/cave.png`;
+        this.image.src = `${config.assets.path}/images/cave.png`;
         break;
       case TileType.WATER:
-        this.image.src = `${config.assets.path}/water.png`;
+        this.image.src = `${config.assets.path}/images/water.png`;
         break;
       case TileType.TOP_LEFT_CORNER_PATH:
-        this.image.src = `${config.assets.path}/topLeftCornerPath.png`;
+        this.image.src = `${config.assets.path}/images/topLeftCornerPath.png`;
         break;
       case TileType.TOP_RIGHT_CORNER_PATH:
-        this.image.src = `${config.assets.path}/topRightCornerPath.png`;
+        this.image.src = `${config.assets.path}/images/topRightCornerPath.png`;
         break;
       case TileType.BOTTOM_LEFT_CORNER_PATH:
-        this.image.src = `${config.assets.path}/bottomLeftCornerPath.png`;
+        this.image.src = `${config.assets.path}/images/bottomLeftCornerPath.png`;
         break;
       case TileType.BOTTOM_RIGHT_CORNER_PATH:
-        this.image.src = `${config.assets.path}/bottomRightCornerPath.png`;
+        this.image.src = `${config.assets.path}/images/bottomRightCornerPath.png`;
         break;
       case TileType.VERTICAL_PATH:
-        this.image.src = `${config.assets.path}/verticalPath.png`;
+        this.image.src = `${config.assets.path}/images/verticalPath.png`;
         break;
       case TileType.HORIZONTAL_PATH:
-        this.image.src = `${config.assets.path}/horizontalPath.png`;
+        this.image.src = `${config.assets.path}/images/horizontalPath.png`;
         break;
       case TileType.PATH:
-        this.image.src = `${config.assets.path}/path.png`;
+        this.image.src = `${config.assets.path}/images/path.png`;
         break;
       case TileType.BOTTOM_EDGE_PATH:
-        this.image.src = `${config.assets.path}/bottomEdgePath.png`;
+        this.image.src = `${config.assets.path}/images/bottomEdgePath.png`;
         break;
       case TileType.RIGHT_EDGE_PATH:
-        this.image.src = `${config.assets.path}/rightEdgePath.png`;
+        this.image.src = `${config.assets.path}/images/rightEdgePath.png`;
         break;
       case TileType.TOP_EDGE_PATH:
-        this.image.src = `${config.assets.path}/topEdgePath.png`;
+        this.image.src = `${config.assets.path}/images/topEdgePath.png`;
         break;
       case TileType.LEFT_EDGE_PATH:
-        this.image.src = `${config.assets.path}/leftEdgePath.png`;
+        this.image.src = `${config.assets.path}/images/leftEdgePath.png`;
         break;
       default:
         throw new Error(`Unknown TileType in Tile constructor... ${type}`);

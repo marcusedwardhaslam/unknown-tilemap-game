@@ -15,6 +15,11 @@ export function renderEnemies(ctx, enemies) {
         enemy.draw(ctx);
     }
 }
+export function renderPlayerTurrets(ctx, turrets) {
+    for (const turret of turrets) {
+        turret.draw(ctx);
+    }
+}
 export function clearScreen(canvas, ctx) {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);

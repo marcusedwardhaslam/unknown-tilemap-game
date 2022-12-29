@@ -1,3 +1,4 @@
+import config from '../config.js';
 import { Enemy } from './enemy.js';
 export class Zombie extends Enemy {
     constructor(pos, level) {
@@ -5,9 +6,9 @@ export class Zombie extends Enemy {
         this.name = 'zombie';
         this.hp = 2;
         this.fillStyle = 'green';
-        // How many frames need to pass before
-        this.tickRate = 6;
+        // How many frames need to pass before zombie moves
+        this.tickRate = 8;
         this.image = new Image();
-        this.image.src = 'assets/zombie.png';
+        this.image.src = `${config.assets.path}/images/zombie.png`;
     }
 }

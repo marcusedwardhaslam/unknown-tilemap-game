@@ -1,3 +1,5 @@
+import config from '../config.js';
+import { renderRoute } from '../debug.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar } from '../pathfinding.js';
 export class Enemy {
@@ -13,12 +15,30 @@ export class Enemy {
         this.width = 16;
         this.fillStyle = 'grey';
         this.image = new Image();
+        this.hitSound = new Audio('assets/sounds/zombiehit.wav');
+        this.deathSound = new Audio('assets/sounds/zombiedeath.wav');
+        this.hp = 0;
+        this.dead = false;
+        this.updateRoute();
+    }
+    isDead() {
+        return this.dead;
     }
     setRoute(route) {
         this.route = route;
     }
     getRoute() {
         return this.route;
+    }
+    getPos() {
+        return this.pos;
+    }
+    hit() {
+        this.hitSound.play();
+    }
+    die() {
+        this.deathSound.play();
+        this.dead = true;
     }
     draw(ctx) {
         if (this.image.src === '') {
@@ -28,6 +48,9 @@ export class Enemy {
             ctx.fill();
             ctx.closePath();
             return;
+        }
+        if (config.debug) {
+            renderRoute(ctx, this.route, 'rgba(255, 255, 255, 0.1)');
         }
         ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
     }
@@ -50,10 +73,19 @@ export class Enemy {
         });
         this.route = route;
     }
+    takeDamage(damage) {
+        if (damage <= 0) {
+            return;
+        }
+        this.hit();
+        this.hp -= damage;
+        if (this.hp < 0) {
+            this.die();
+        }
+    }
     update() {
         this.tick += 1;
         if (this.tick > this.tickRate) {
-            this.updateRoute();
             this.updatePosition();
         }
     }
