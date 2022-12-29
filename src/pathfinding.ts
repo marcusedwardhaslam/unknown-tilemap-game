@@ -11,6 +11,8 @@ interface GraphNode extends Position {
   h: number;
   tile: Tile;
   parent: GraphNode | null;
+  closed: boolean;
+  visited: boolean;
 }
 
 function manhattan(start: GraphNode, end: GraphNode) {
@@ -71,15 +73,13 @@ function initGraph(grid: Tile[][]): GraphNode[][] {
         h: 0,
         tile: grid[y][x],
         parent: null,
+        closed: false,
+        visited: false,
       });
     }
   }
   return graph;
 }
-
-const findInList = (needle: { x: number, y: number}, list: GraphNode[]) => list.find(
-  haystack => haystack.x === needle.x && haystack.y === needle.y,
-);
 
 export function aStar(grid: Tile[][], beginning: Position, end: Position) {
   const graph = initGraph(grid);
@@ -91,6 +91,8 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
     h: 0,
     tile: grid[end.y][end.x],
     parent: null,
+    closed: false,
+    visited: false,
   };
   const start = {
     x: beginning.x,
@@ -100,13 +102,13 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
     h: 0,
     tile: grid[beginning.y][beginning.x],
     parent: null,
+    closed: false,
+    visited: false,
   };
   const open: GraphNode[] = [start];
-  const closed: GraphNode[] = [];
 
   while (open.length) {
-    const orderedOpen = open.sort((a, b) => a.f - b.f || a.h - b.h);
-    const current = orderedOpen.splice(0, 1)[0];
+    const current = open.sort((a, b) => a.f - b.f).splice(0, 1)[0];
 
     // Path found... Return route.
     if (current.x == end.x && current.y == end.y) {
@@ -119,34 +121,30 @@ export function aStar(grid: Tile[][], beginning: Position, end: Position) {
       return route.reverse();
     }
 
-    closed.push(current);
+    current.closed = true;
 
     const neighbours = findNeighbours(graph, current);
     for (const neighbour of neighbours) {
-      // Is neighbour already closed?
-      if (findInList(neighbour, closed) || !neighbour.tile.isPath()) {
+      if (neighbour.closed || !neighbour.tile.isPath()) {
         continue;
       }
 
-      // cost of movement is always 1
       const gScore = current.g + 1;
       let gScoreIsBest = false;
 
-      // If neighbour not in open, we can calculate it's score.
-      if(!findInList(neighbour, open)){
+      if (!neighbour.visited) {
         gScoreIsBest = true;
         neighbour.h = manhattan(neighbour, goal);
+        neighbour.visited = true;
         open.push(neighbour);
       } else if (gScore < neighbour.g) {
         gScoreIsBest = true;
       }
 
-      if(gScoreIsBest) {
+      if (gScoreIsBest) {
         neighbour.parent = current;
         neighbour.g = gScore;
         neighbour.f = neighbour.g + neighbour.h;
-
-        open.push(neighbour);
       }
     }
   }

@@ -53,12 +53,13 @@ function initGraph(grid) {
                 h: 0,
                 tile: grid[y][x],
                 parent: null,
+                closed: false,
+                visited: false,
             });
         }
     }
     return graph;
 }
-const findInList = (needle, list) => list.find(haystack => haystack.x === needle.x && haystack.y === needle.y);
 export function aStar(grid, beginning, end) {
     const graph = initGraph(grid);
     const goal = {
@@ -69,6 +70,8 @@ export function aStar(grid, beginning, end) {
         h: 0,
         tile: grid[end.y][end.x],
         parent: null,
+        closed: false,
+        visited: false,
     };
     const start = {
         x: beginning.x,
@@ -78,12 +81,12 @@ export function aStar(grid, beginning, end) {
         h: 0,
         tile: grid[beginning.y][beginning.x],
         parent: null,
+        closed: false,
+        visited: false,
     };
     const open = [start];
-    const closed = [];
     while (open.length) {
-        const orderedOpen = open.sort((a, b) => a.f - b.f || a.h - b.h);
-        const current = orderedOpen.splice(0, 1)[0];
+        const current = open.sort((a, b) => a.f - b.f).splice(0, 1)[0];
         // Path found... Return route.
         if (current.x == end.x && current.y == end.y) {
             let currentSearchNode = current;
@@ -94,20 +97,18 @@ export function aStar(grid, beginning, end) {
             }
             return route.reverse();
         }
-        closed.push(current);
+        current.closed = true;
         const neighbours = findNeighbours(graph, current);
         for (const neighbour of neighbours) {
-            // Is neighbour already closed?
-            if (findInList(neighbour, closed) || !neighbour.tile.isPath()) {
+            if (neighbour.closed || !neighbour.tile.isPath()) {
                 continue;
             }
-            // cost of movement is always 1
             const gScore = current.g + 1;
             let gScoreIsBest = false;
-            // If neighbour not in open, we can calculate it's score.
-            if (!findInList(neighbour, open)) {
+            if (!neighbour.visited) {
                 gScoreIsBest = true;
                 neighbour.h = manhattan(neighbour, goal);
+                neighbour.visited = true;
                 open.push(neighbour);
             }
             else if (gScore < neighbour.g) {
@@ -117,7 +118,6 @@ export function aStar(grid, beginning, end) {
                 neighbour.parent = current;
                 neighbour.g = gScore;
                 neighbour.f = neighbour.g + neighbour.h;
-                open.push(neighbour);
             }
         }
     }

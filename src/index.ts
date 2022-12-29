@@ -30,7 +30,7 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     renderEnemies(ctx, enemies);
 
     // Render player game objects
-    renderTileMapGrid(ctx);
+    // renderTileMapGrid(ctx);
 
     // Gameplay loop
     playGame(enemies);

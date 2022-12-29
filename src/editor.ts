@@ -1,10 +1,10 @@
 import { clearScreen, renderMapGraphics } from './graphics.js';
 import { getCanvas, getContext } from './canvas.js';
-import { level } from './levels/1.js';
 import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
 import { Tile, TileType } from './tiles/tile.js';
+import { level, loadLevel } from './levels/manager.js';
 
 const tileTypes = [
   { type: TileType.GOAL, name: 'GOAL' },
@@ -52,7 +52,9 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
   }, 1000 / 60);
 }
 
-function main() {
+async function main() {
+  const level = await loadLevel();
+
   const canvas = getCanvas();
   const context = getContext(canvas);
   const exportButton = document.getElementById('exportMap');
@@ -76,5 +78,5 @@ function main() {
 }
 
 (() => {
-  main();
+  main().catch(console.log).catch(console.error);
 })();

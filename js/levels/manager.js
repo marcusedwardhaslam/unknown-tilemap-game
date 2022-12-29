@@ -1,5 +1,5 @@
 import { Tile } from '../tiles/tile.js';
-import { json } from './allmud.js';
+import { json } from './nicemap.js';
 export let level = [];
 export function loadLevel() {
     return new Promise((res, rej) => {

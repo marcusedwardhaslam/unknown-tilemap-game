@@ -1,9 +1,18 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { clearScreen, renderMapGraphics } from './graphics.js';
 import { getCanvas, getContext } from './canvas.js';
-import { level } from './levels/1.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
 import { Tile, TileType } from './tiles/tile.js';
+import { level, loadLevel } from './levels/manager.js';
 const tileTypes = [
     { type: TileType.GOAL, name: 'GOAL' },
     { type: TileType.GRASS, name: 'GRASS' },
@@ -44,27 +53,30 @@ function draw(canvas, ctx) {
     }, 1000 / 60);
 }
 function main() {
-    const canvas = getCanvas();
-    const context = getContext(canvas);
-    const exportButton = document.getElementById('exportMap');
-    if (exportButton !== null) {
-        exportButton.onclick = () => console.log(btoa(JSON.stringify(level)));
-    }
-    const tileListHtmlElement = document.getElementById('tileList');
-    for (const tileType of tileTypes) {
-        const listItem = document.createElement('li');
-        const button = document.createElement('button');
-        const description = document.createTextNode(tileType.name);
-        button.append(description);
-        button.onclick = () => setActiveTile(tileType.type);
-        listItem.append(button);
-        tileListHtmlElement === null || tileListHtmlElement === void 0 ? void 0 : tileListHtmlElement.append(listItem);
-    }
-    registerEventListeners(canvas, {
-        click: changeTileType,
+    return __awaiter(this, void 0, void 0, function* () {
+        const level = yield loadLevel();
+        const canvas = getCanvas();
+        const context = getContext(canvas);
+        const exportButton = document.getElementById('exportMap');
+        if (exportButton !== null) {
+            exportButton.onclick = () => console.log(btoa(JSON.stringify(level)));
+        }
+        const tileListHtmlElement = document.getElementById('tileList');
+        for (const tileType of tileTypes) {
+            const listItem = document.createElement('li');
+            const button = document.createElement('button');
+            const description = document.createTextNode(tileType.name);
+            button.append(description);
+            button.onclick = () => setActiveTile(tileType.type);
+            listItem.append(button);
+            tileListHtmlElement === null || tileListHtmlElement === void 0 ? void 0 : tileListHtmlElement.append(listItem);
+        }
+        registerEventListeners(canvas, {
+            click: changeTileType,
+        });
+        draw(canvas, context);
     });
-    draw(canvas, context);
 }
 (() => {
-    main();
+    main().catch(console.log).catch(console.error);
 })();

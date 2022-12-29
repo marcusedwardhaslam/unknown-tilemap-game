@@ -1,5 +1,5 @@
 import { Tile, TileType } from '../tiles/tile.js';
-import { json } from './allmud.js';
+import { json } from './nicemap.js';
 
 export type LevelData = { type: TileType; image: string | null }[][];
 export type Level = Tile[][];
