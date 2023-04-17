@@ -22,6 +22,7 @@ export function getCanvas() {
   if (!htmlElementIsCanvas(canvas)) {
     throw new Error('HTML Element is not of type HTMLCanvasElement');
   }
+  // TODO: Relocate this call
   adjustCanvasSize(canvas);
   return canvas;
 }
