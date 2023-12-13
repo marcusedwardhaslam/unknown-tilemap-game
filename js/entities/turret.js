@@ -15,6 +15,9 @@ export class Turret {
             new Audio('assets/sounds/arrow2.wav'),
             new Audio('assets/sounds/arrow3.wav'),
         ];
+        this.onSpawnSounds = [
+            new Audio('assets/sounds/ready-for-action-crushed.wav'),
+        ];
         this.image.src = `${config.assets.path}/images/archer.png`;
         this.boundary = {
             topLeft: {
@@ -34,6 +37,12 @@ export class Turret {
                 y: this.pos.y + this.tileRange,
             },
         };
+        this.onSpawn();
+    }
+    onSpawn() {
+        const onSpawnSound = this.onSpawnSounds[Math.floor(Math.random() * this.onSpawnSounds.length)];
+        onSpawnSound.volume = 1;
+        onSpawnSound.play();
     }
     draw(ctx) {
         if (config.debug) {
