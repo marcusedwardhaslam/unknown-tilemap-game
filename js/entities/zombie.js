@@ -4,11 +4,12 @@ export class Zombie extends Enemy {
     constructor(level) {
         super(level);
         this.name = 'zombie';
-        this.hp = 2;
+        this.maxHp = 2;
         this.fillStyle = 'green';
         // How many frames need to pass before zombie moves
         this.tickRate = 8;
         this.image = new Image();
+        this.hp = this.maxHp;
         this.image.src = `${config.assets.path}/images/zombie.png`;
     }
 }

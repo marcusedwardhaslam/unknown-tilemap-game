@@ -4,7 +4,7 @@ import { Enemy } from './enemy.js';
 
 export class Zombie extends Enemy {
   private name = 'zombie';
-  protected hp = 2;
+  protected maxHp = 2;
   protected fillStyle = 'green';
 
   // How many frames need to pass before zombie moves
@@ -14,6 +14,7 @@ export class Zombie extends Enemy {
 
   constructor(level: Level) {
     super(level);
+    this.hp = this.maxHp;
     this.image.src = `${config.assets.path}/images/zombie.png`;
   }
 }

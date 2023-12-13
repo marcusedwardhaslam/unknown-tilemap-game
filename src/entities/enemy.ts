@@ -27,6 +27,7 @@ export class Enemy {
   );
 
   // Status
+  protected maxHp = 0;
   protected hp = 0;
   protected dead = false;
 
@@ -88,6 +89,29 @@ export class Enemy {
       renderRoute(ctx, this.route, 'rgba(255, 255, 255, 0.1)');
     }
     ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
+    ctx.strokeRect(
+      this.pos.x * TILE_SIZE,
+      this.pos.y * TILE_SIZE - 5,
+      TILE_SIZE + 1,
+      4
+    );
+    const hpPercentRemaining = (this.hp / this.maxHp) * 100;
+    const hpRemainingStatusBarWidth = (hpPercentRemaining / 100) * TILE_SIZE;
+    ctx.fillStyle = 'green';
+    ctx.fillRect(
+      this.pos.x * TILE_SIZE,
+      this.pos.y * TILE_SIZE - 5,
+      hpRemainingStatusBarWidth,
+      3
+    );
+    const hpLostStatusBarWidth = TILE_SIZE - hpRemainingStatusBarWidth;
+    ctx.fillStyle = 'red';
+    ctx.fillRect(
+      this.pos.x * TILE_SIZE + hpLostStatusBarWidth,
+      this.pos.y * TILE_SIZE - 5,
+      hpLostStatusBarWidth,
+      3
+    );
   }
 
   protected updatePosition() {
@@ -110,7 +134,7 @@ export class Enemy {
     }
     this.hit();
     this.hp -= damage;
-    if (this.hp < 0) {
+    if (this.hp <= 0) {
       this.die();
     }
   }
