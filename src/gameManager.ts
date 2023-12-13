@@ -1,8 +1,8 @@
 import { Creeper } from './entities/creeper.js';
 import { Enemy } from './entities/enemy.js';
+import { Level } from './levels/manager.js';
 import { Turret } from './entities/turret.js';
 import { Zombie } from './entities/zombie.js';
-import { Level } from './levels/manager.js';
 
 export interface GameManager {
   enemyGameObjects: Enemy[];
@@ -16,10 +16,10 @@ export const gameManager: GameManager = {
 
 export function initGameManager(level: Level): GameManager {
   gameManager.enemyGameObjects = [
-    new Zombie(level),
+    new Creeper(level),
     new Creeper(level),
     new Zombie(level),
-    new Creeper(level),
+    new Zombie(level),
     new Zombie(level),
   ];
   gameManager.playerGameObjects = [

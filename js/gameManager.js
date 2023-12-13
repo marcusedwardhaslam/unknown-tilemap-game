@@ -7,10 +7,10 @@ export const gameManager = {
 };
 export function initGameManager(level) {
     gameManager.enemyGameObjects = [
-        new Zombie(level),
+        new Creeper(level),
         new Creeper(level),
         new Zombie(level),
-        new Creeper(level),
+        new Zombie(level),
         new Zombie(level),
     ];
     gameManager.playerGameObjects = [

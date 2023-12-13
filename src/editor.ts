@@ -1,10 +1,10 @@
-import { clearScreen, renderMapGraphics } from './graphics.js';
 import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
+import { clearScreen, renderMapGraphics } from './graphics.js';
+import { level, loadLevel } from './levels/manager.js';
 import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
-import { renderTileMapGrid } from './map.js';
+import { renderTileMapGrid } from './debug.js';
 import { Tile, TileType } from './tiles/tile.js';
-import { level, loadLevel } from './levels/manager.js';
 
 const tileTypes = [
   { type: TileType.GOAL, name: 'GOAL' },

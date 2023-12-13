@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { clearScreen, renderMapGraphics } from './graphics.js';
 import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
-import { registerEventListeners } from './controls.js';
-import { renderTileMapGrid } from './map.js';
-import { Tile, TileType } from './tiles/tile.js';
+import { clearScreen, renderMapGraphics } from './graphics.js';
 import { level, loadLevel } from './levels/manager.js';
+import { registerEventListeners } from './controls.js';
+import { renderTileMapGrid } from './debug.js';
+import { Tile, TileType } from './tiles/tile.js';
 const tileTypes = [
     { type: TileType.GOAL, name: 'GOAL' },
     { type: TileType.GRASS, name: 'GRASS' },
