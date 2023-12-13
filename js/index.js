@@ -16,6 +16,7 @@ import { level, loadLevel } from './levels/manager.js';
 import { Turret } from './entities/turret.js';
 import config from './config.js';
 import { renderTileMapGrid } from './map.js';
+import { playGame } from './game.js';
 function changeTileType(pos) {
     console.log(pos);
 }
@@ -41,20 +42,6 @@ function draw(canvas, ctx) {
         // Gameplay loop
         playGame(enemies, playerGameObjects);
     }, 1000 / config.fps);
-}
-// TODO: Refactor - Move to appropriate file.
-function playGame(enemies, playerGameObjects) {
-    for (let i = 0; i < enemies.length; i++) {
-        const enemy = enemies[i];
-        if (enemy.isDead()) {
-            enemies.splice(i, 1);
-            continue;
-        }
-        enemy.update();
-    }
-    for (const playerGameObject of playerGameObjects) {
-        playerGameObject.update(enemies);
-    }
 }
 function makeEnemies(level) {
     enemies.push(new Zombie(level));
