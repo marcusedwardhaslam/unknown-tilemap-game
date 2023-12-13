@@ -5,7 +5,7 @@ function htmlElementIsCanvas(element) {
     return (element.width !== undefined &&
         element.height !== undefined);
 }
-function adjustCanvasSize(canvas) {
+export function adjustCanvasSize(canvas) {
     canvas.width = MAP_WIDTH;
     canvas.height = MAP_HEIGHT;
 }
@@ -14,8 +14,6 @@ export function getCanvas() {
     if (!htmlElementIsCanvas(canvas)) {
         throw new Error('HTML Element is not of type HTMLCanvasElement');
     }
-    // TODO: Relocate this call
-    adjustCanvasSize(canvas);
     return canvas;
 }
 export function getContext(canvas) {

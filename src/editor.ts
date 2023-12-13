@@ -1,5 +1,5 @@
 import { clearScreen, renderMapGraphics } from './graphics.js';
-import { getCanvas, getContext } from './canvas.js';
+import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
 import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
@@ -56,6 +56,7 @@ async function main() {
   const level = await loadLevel();
 
   const canvas = getCanvas();
+  adjustCanvasSize(canvas);
   const context = getContext(canvas);
   const exportButton = document.getElementById('exportMap');
   if (exportButton !== null) {

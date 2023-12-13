@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { clearScreen, renderEnemies, renderMapGraphics, renderPlayerTurrets, } from './graphics.js';
-import { getCanvas, getContext } from './canvas.js';
+import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
 import { registerEventListeners } from './controls.js';
 import { Zombie } from './entities/zombie.js';
 import { Creeper } from './entities/creeper.js';
@@ -71,6 +71,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const level = yield loadLevel();
         const canvas = getCanvas();
+        adjustCanvasSize(canvas);
         const context = getContext(canvas);
         makeEnemies(level);
         makePlayerGameObjects(level);

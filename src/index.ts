@@ -5,7 +5,7 @@ import {
   renderPlayerTurrets,
 } from './graphics.js';
 import { Enemy } from './entities/enemy.js';
-import { getCanvas, getContext } from './canvas.js';
+import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
 import { Position } from './pathfinding.js';
 import { registerEventListeners } from './controls.js';
 import { Zombie } from './entities/zombie.js';
@@ -83,6 +83,7 @@ async function main() {
   const level = await loadLevel();
 
   const canvas = getCanvas();
+  adjustCanvasSize(canvas);
   const context = getContext(canvas);
 
   makeEnemies(level);

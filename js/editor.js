@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { clearScreen, renderMapGraphics } from './graphics.js';
-import { getCanvas, getContext } from './canvas.js';
+import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
 import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './map.js';
 import { Tile, TileType } from './tiles/tile.js';
@@ -56,6 +56,7 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const level = yield loadLevel();
         const canvas = getCanvas();
+        adjustCanvasSize(canvas);
         const context = getContext(canvas);
         const exportButton = document.getElementById('exportMap');
         if (exportButton !== null) {

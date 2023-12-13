@@ -59,7 +59,7 @@ export class Enemy {
   }
 
   public die(): void {
-    this.deathSound.play();
+    // this.deathSound.play();
     this.dead = true;
   }
 

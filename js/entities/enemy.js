@@ -41,7 +41,7 @@ export class Enemy {
         // this.hitSound.play();
     }
     die() {
-        this.deathSound.play();
+        // this.deathSound.play();
         this.dead = true;
     }
     draw(ctx) {
