@@ -1,5 +1,7 @@
 import config from '../config.js';
 import { renderRoute } from '../debug.js';
+import { gameManager } from '../gameManager.js';
+import { STATUS_BAR_HEIGHT } from '../graphics.js';
 import { findTile } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar } from '../pathfinding.js';
@@ -9,7 +11,7 @@ export class Enemy {
         this.level = level;
         // This enemies current tick
         this.tick = 0;
-        // How many frames need to pass before
+        // How many frames need to pass before enemy moves
         this.tickRate = 2;
         this.route = [];
         // graphics
@@ -18,17 +20,20 @@ export class Enemy {
         this.image = new Image();
         this.hitSound = [
             new Audio('assets/sounds/zombiehit1.wav'),
-            new Audio('assets/sounds/zombiehit2.wav'),
             new Audio('assets/sounds/zombiehit3.wav'),
         ];
-        this.deathSound = new Audio('assets/sounds/zombiedeath.wav');
+        this.deathSound = new Audio('assets/sounds/zombiehit2.wav');
         // Status
-        this.maxHp = 0;
+        this.maxHp = 50;
         this.hp = 0;
         this.dead = false;
+        this.killValue = 2000;
         this.pos = findTile(level, TileType.START);
         this.goal = findTile(level, TileType.GOAL);
         this.updateRoute();
+    }
+    getKillValue() {
+        return this.killValue;
     }
     isDead() {
         return this.dead;
@@ -48,14 +53,18 @@ export class Enemy {
         // hitSound.play();
     }
     die() {
-        // this.deathSound.play();
-        this.dead = true;
+        if (!this.dead) {
+            this.deathSound.play();
+            this.dead = true;
+            gameManager.money += this.getKillValue();
+            gameManager.score += this.getKillValue();
+        }
     }
     draw(ctx) {
         if (this.image.src === '') {
             ctx.beginPath();
             ctx.fillStyle = this.fillStyle;
-            ctx.arc(this.pos.x * TILE_SIZE + TILE_SIZE / 2, this.pos.y * TILE_SIZE + TILE_SIZE / 2, this.width / 2, 0, 360);
+            ctx.arc(this.pos.x * TILE_SIZE + TILE_SIZE / 2, STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE + TILE_SIZE / 2), this.width / 2, 0, 360);
             ctx.fill();
             ctx.closePath();
             return;
@@ -63,16 +72,16 @@ export class Enemy {
         if (config.debug) {
             renderRoute(ctx, this.route, 'rgba(255, 255, 255, 0.1)');
         }
-        ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
-        ctx.strokeRect(this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE - 5, TILE_SIZE + 1, 4);
+        ctx.drawImage(this.image, this.pos.x * TILE_SIZE, STATUS_BAR_HEIGHT + this.pos.y * TILE_SIZE);
+        ctx.strokeRect(this.pos.x * TILE_SIZE, STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5), TILE_SIZE + 1, 4);
         const hpPercentRemaining = (this.hp / this.maxHp) * 100;
         const hpPercentLost = ((this.maxHp - this.hp) / this.maxHp) * 100;
         const hpRemainingStatusBarWidth = (hpPercentRemaining / 100) * TILE_SIZE;
         const hpLostStatusBarWidth = (hpPercentLost / 100) * TILE_SIZE;
         ctx.fillStyle = 'green';
-        ctx.fillRect(this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE - 5, hpRemainingStatusBarWidth, 3);
+        ctx.fillRect(this.pos.x * TILE_SIZE, STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5), hpRemainingStatusBarWidth, 3);
         ctx.fillStyle = 'red';
-        ctx.fillRect(this.pos.x * TILE_SIZE + hpRemainingStatusBarWidth, this.pos.y * TILE_SIZE - 5, hpLostStatusBarWidth, 3);
+        ctx.fillRect(this.pos.x * TILE_SIZE + hpRemainingStatusBarWidth, STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5), hpLostStatusBarWidth, 3);
     }
     updatePosition() {
         const nextPosition = this.route.splice(0, 1)[0];

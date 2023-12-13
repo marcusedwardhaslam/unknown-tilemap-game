@@ -5,6 +5,7 @@ import {
   renderEnemies,
   renderMapGraphics,
   renderPlayerTurrets,
+  renderUserInterface,
 } from './graphics.js';
 import { level, loadLevel } from './levels/manager.js';
 import { playGame } from './game.js';
@@ -33,6 +34,8 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
     if (config.debug) {
       renderTileMapGrid(ctx);
     }
+
+    renderUserInterface(canvas, ctx);
 
     // Gameplay loop
     playGame(gameManager.enemyGameObjects, gameManager.playerGameObjects);

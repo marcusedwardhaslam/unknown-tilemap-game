@@ -12,6 +12,12 @@ export class Zombie extends Enemy {
 
   protected image = new Image();
 
+  // What do I get for killing this unit?
+  protected killValue = 25;
+  public getKillValue() {
+    return this.killValue;
+  }
+
   constructor(level: Level) {
     super(level);
     this.hp = this.maxHp;

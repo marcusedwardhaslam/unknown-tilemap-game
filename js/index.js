@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { adjustCanvasSize, getCanvas, getContext } from './canvas.js';
 import { gameManager, initGameManager } from './gameManager.js';
-import { clearScreen, renderEnemies, renderMapGraphics, renderPlayerTurrets, } from './graphics.js';
+import { clearScreen, renderEnemies, renderMapGraphics, renderPlayerTurrets, renderUserInterface, } from './graphics.js';
 import { level, loadLevel } from './levels/manager.js';
 import { playGame } from './game.js';
 import { renderTileMapGrid } from './debug.js';
@@ -31,6 +31,7 @@ function draw(canvas, ctx) {
         if (config.debug) {
             renderTileMapGrid(ctx);
         }
+        renderUserInterface(canvas, ctx);
         // Gameplay loop
         playGame(gameManager.enemyGameObjects, gameManager.playerGameObjects);
     }, 1000 / config.fps);

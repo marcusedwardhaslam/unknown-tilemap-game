@@ -1,5 +1,7 @@
 import config from '../config.js';
 import { renderRoute } from '../debug.js';
+import { gameManager } from '../gameManager.js';
+import { STATUS_BAR_HEIGHT } from '../graphics.js';
 import { findTile, Level } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar, Position } from '../pathfinding.js';
@@ -8,7 +10,7 @@ import { TileType } from '../tiles/tile.js';
 export class Enemy {
   // This enemies current tick
   protected tick = 0;
-  // How many frames need to pass before
+  // How many frames need to pass before enemy moves
   protected tickRate = 2;
 
   protected route: Position[] = [];
@@ -19,15 +21,14 @@ export class Enemy {
   protected image = new Image();
   protected hitSound: HTMLAudioElement[] = [
     new Audio('assets/sounds/zombiehit1.wav'),
-    new Audio('assets/sounds/zombiehit2.wav'),
     new Audio('assets/sounds/zombiehit3.wav'),
   ];
   protected deathSound: HTMLAudioElement = new Audio(
-    'assets/sounds/zombiedeath.wav'
+    'assets/sounds/zombiehit2.wav'
   );
 
   // Status
-  protected maxHp = 0;
+  protected maxHp = 50;
   protected hp = 0;
   protected dead = false;
 
@@ -39,6 +40,11 @@ export class Enemy {
     this.pos = findTile(level, TileType.START);
     this.goal = findTile(level, TileType.GOAL);
     this.updateRoute();
+  }
+
+  protected killValue = 2000;
+  public getKillValue() {
+    return this.killValue;
   }
 
   public isDead(): boolean {
@@ -65,8 +71,12 @@ export class Enemy {
   }
 
   public die(): void {
-    // this.deathSound.play();
-    this.dead = true;
+    if (!this.dead) {
+      this.deathSound.play();
+      this.dead = true;
+      gameManager.money += this.getKillValue();
+      gameManager.score += this.getKillValue();
+    }
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -75,7 +85,7 @@ export class Enemy {
       ctx.fillStyle = this.fillStyle;
       ctx.arc(
         this.pos.x * TILE_SIZE + TILE_SIZE / 2,
-        this.pos.y * TILE_SIZE + TILE_SIZE / 2,
+        STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE + TILE_SIZE / 2),
         this.width / 2,
         0,
         360
@@ -88,10 +98,14 @@ export class Enemy {
     if (config.debug) {
       renderRoute(ctx, this.route, 'rgba(255, 255, 255, 0.1)');
     }
-    ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
+    ctx.drawImage(
+      this.image,
+      this.pos.x * TILE_SIZE,
+      STATUS_BAR_HEIGHT + this.pos.y * TILE_SIZE
+    );
     ctx.strokeRect(
       this.pos.x * TILE_SIZE,
-      this.pos.y * TILE_SIZE - 5,
+      STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5),
       TILE_SIZE + 1,
       4
     );
@@ -102,14 +116,14 @@ export class Enemy {
     ctx.fillStyle = 'green';
     ctx.fillRect(
       this.pos.x * TILE_SIZE,
-      this.pos.y * TILE_SIZE - 5,
+      STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5),
       hpRemainingStatusBarWidth,
       3
     );
     ctx.fillStyle = 'red';
     ctx.fillRect(
       this.pos.x * TILE_SIZE + hpRemainingStatusBarWidth,
-      this.pos.y * TILE_SIZE - 5,
+      STATUS_BAR_HEIGHT + (this.pos.y * TILE_SIZE - 5),
       hpLostStatusBarWidth,
       3
     );

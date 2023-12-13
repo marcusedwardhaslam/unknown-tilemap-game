@@ -1,3 +1,4 @@
+import { STATUS_BAR_HEIGHT } from './graphics.js';
 import { MAP_HEIGHT, MAP_WIDTH } from './map.js';
 const CANVAS_ID = 'canvas';
 const CONTEXT = '2d';
@@ -7,7 +8,7 @@ function htmlElementIsCanvas(element) {
 }
 export function adjustCanvasSize(canvas) {
     canvas.width = MAP_WIDTH;
-    canvas.height = MAP_HEIGHT;
+    canvas.height = MAP_HEIGHT + STATUS_BAR_HEIGHT;
 }
 export function getCanvas() {
     const canvas = document.getElementById(CANVAS_ID);

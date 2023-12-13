@@ -2,6 +2,7 @@ import { Position } from '../pathfinding.js';
 import { TILE_SIZE } from '../map.js';
 import { Enemy } from './enemy.js';
 import config from '../config.js';
+import { STATUS_BAR_HEIGHT } from '../graphics.js';
 
 type Boundary = {
   topLeft: Position;
@@ -11,30 +12,33 @@ type Boundary = {
 };
 
 export class Turret {
-  private boundary: Boundary;
-  protected tileRange = 4;
+  // Graphics
   protected image = new Image();
+
+  // Attacking
+  protected tileRange = 4;
+  private attackBoundary: Boundary;
   protected target: Enemy | null = null;
   protected attackDamage = 1;
+  protected attackTick = 0; // How many frames need to pass before enemy can attack again
+  protected attackTickRate = config.fps * 1; // Attack once every half a second
 
-  protected attackTick = 0;
-
-  // Attack once every half a second
-  protected attackTickRate = config.fps * 1;
-
+  // Audio
   protected arrowFireSounds: HTMLAudioElement[] = [
     new Audio('assets/sounds/arrow1.wav'),
     new Audio('assets/sounds/arrow2.wav'),
     new Audio('assets/sounds/arrow3.wav'),
   ];
-
   protected onSpawnSounds: HTMLAudioElement[] = [
     new Audio('assets/sounds/ready-for-action-crushed.wav'),
   ];
 
+  // Shop values
+  private static cost = 75;
+
   constructor(protected pos: Position) {
     this.image.src = `${config.assets.path}/images/archer.png`;
-    this.boundary = {
+    this.attackBoundary = {
       topLeft: {
         x: this.pos.x - this.tileRange,
         y: this.pos.y - this.tileRange,
@@ -54,6 +58,10 @@ export class Turret {
     };
 
     this.onSpawn();
+  }
+
+  public static getCost() {
+    return this.cost;
   }
 
   public onSpawn() {
@@ -76,7 +84,11 @@ export class Turret {
       ctx.stroke();
       ctx.closePath();
     }
-    ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
+    ctx.drawImage(
+      this.image,
+      this.pos.x * TILE_SIZE,
+      STATUS_BAR_HEIGHT + this.pos.y * TILE_SIZE
+    );
   }
 
   private detectEnemiesInBoundary(enemies: Enemy[]): Enemy[] {
@@ -92,17 +104,17 @@ export class Turret {
   private enemyIsInBoundary(enemy: Enemy) {
     const enemyPos = enemy.getPos();
     const enemyInTopLeftBoundary =
-      enemyPos.x >= this.boundary.topLeft.x &&
-      enemyPos.y >= this.boundary.topLeft.y;
+      enemyPos.x >= this.attackBoundary.topLeft.x &&
+      enemyPos.y >= this.attackBoundary.topLeft.y;
     const enemyInTopRightBoundary =
-      enemyPos.x <= this.boundary.topRight.x &&
-      enemyPos.y >= this.boundary.topRight.y;
+      enemyPos.x <= this.attackBoundary.topRight.x &&
+      enemyPos.y >= this.attackBoundary.topRight.y;
     const enemyInBottomLeftBoundary =
-      enemyPos.x >= this.boundary.bottomLeft.x &&
-      enemyPos.y <= this.boundary.bottomLeft.y;
+      enemyPos.x >= this.attackBoundary.bottomLeft.x &&
+      enemyPos.y <= this.attackBoundary.bottomLeft.y;
     const enemyInBottomRightBoundary =
-      enemyPos.x <= this.boundary.bottomRight.x &&
-      enemyPos.y <= this.boundary.bottomRight.y;
+      enemyPos.x <= this.attackBoundary.bottomRight.x &&
+      enemyPos.y <= this.attackBoundary.bottomRight.y;
     return (
       enemyInTopLeftBoundary &&
       enemyInTopRightBoundary &&

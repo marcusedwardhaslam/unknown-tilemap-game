@@ -9,6 +9,9 @@ export interface GameManager {
   level: Level | null;
 
   mobSpawner: () => void;
+
+  score: number;
+  money: number;
 }
 
 export const gameManager: GameManager = {
@@ -16,6 +19,8 @@ export const gameManager: GameManager = {
   playerGameObjects: [],
   level: null,
   mobSpawner: () => console.log('Mob spawner not initialized'),
+  score: 0,
+  money: 200,
 };
 
 export function initGameManager(level: Level): GameManager {

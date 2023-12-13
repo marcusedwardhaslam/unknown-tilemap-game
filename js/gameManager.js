@@ -4,6 +4,8 @@ export const gameManager = {
     playerGameObjects: [],
     level: null,
     mobSpawner: () => console.log('Mob spawner not initialized'),
+    score: 0,
+    money: 200,
 };
 export function initGameManager(level) {
     gameManager.level = level;

@@ -8,7 +8,12 @@ export class Creeper extends Enemy {
         this.fillStyle = 'blue';
         // How many frames need to pass before creeper moves
         this.tickRate = 4;
+        // What do I get for killing this unit?
+        this.killValue = 50;
         this.hp = this.maxHp;
         this.image.src = `${config.assets.path}/images/creeper.png`;
+    }
+    getKillValue() {
+        return this.killValue;
     }
 }
