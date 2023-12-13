@@ -1,8 +1,8 @@
 import config from '../config.js';
 import { Enemy } from './enemy.js';
 export class Creeper extends Enemy {
-    constructor(pos, level) {
-        super(pos, level);
+    constructor(level) {
+        super(level);
         this.name = 'creeper';
         this.hp = 1;
         this.fillStyle = 'blue';

@@ -7,7 +7,6 @@ const convertClickToTilePosition = (e) => ({
     x: Math.floor(e.offsetY / TILE_SIZE),
     y: Math.floor(e.offsetX / TILE_SIZE),
 });
-// TODO: Fix types
 export function registerEventListeners(canvas, handlers) {
     Object.keys(handlers).forEach((key) => {
         canvas.addEventListener(key, function (e) {

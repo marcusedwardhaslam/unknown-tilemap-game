@@ -1,8 +1,8 @@
 import config from '../config.js';
 import { Enemy } from './enemy.js';
 export class Zombie extends Enemy {
-    constructor(pos, level) {
-        super(pos, level);
+    constructor(level) {
+        super(level);
         this.name = 'zombie';
         this.hp = 2;
         this.fillStyle = 'green';

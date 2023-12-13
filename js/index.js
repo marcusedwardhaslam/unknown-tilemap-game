@@ -57,11 +57,11 @@ function playGame(enemies, playerGameObjects) {
     }
 }
 function makeEnemies(level) {
-    enemies.push(new Zombie({ x: 1, y: 0 }, level));
-    enemies.push(new Creeper({ x: 1, y: 0 }, level));
-    enemies.push(new Zombie({ x: 1, y: 0 }, level));
-    enemies.push(new Creeper({ x: 1, y: 0 }, level));
-    enemies.push(new Zombie({ x: 1, y: 0 }, level));
+    enemies.push(new Zombie(level));
+    enemies.push(new Creeper(level));
+    enemies.push(new Zombie(level));
+    enemies.push(new Creeper(level));
+    enemies.push(new Zombie(level));
 }
 function makePlayerGameObjects(level) {
     playerGameObjects.push(new Turret({ x: 5, y: 6 }, level));

@@ -10,7 +10,7 @@ export class Turret {
         this.attackDamage = 1;
         this.attackTick = 0;
         // Attack once every half a second
-        this.attackTickRate = config.fps * 0.5;
+        this.attackTickRate = config.fps * 0.25;
         this.arrowFireSound = new Audio('assets/sounds/arrowfire.wav');
         this.image.src = `${config.assets.path}/images/castle.png`;
         this.boundary = {
@@ -68,7 +68,7 @@ export class Turret {
     }
     attack(target) {
         target.takeDamage(this.attackDamage);
-        this.arrowFireSound.play();
+        // this.arrowFireSound.play();
         this.attackTick = this.attackTickRate;
         if (target.isDead()) {
             this.target = null;

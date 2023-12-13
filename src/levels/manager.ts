@@ -1,10 +1,22 @@
+import { Position } from '../pathfinding.js';
 import { Tile, TileType } from '../tiles/tile.js';
-import { json } from './nicemap.js';
+import { json } from './allmud.js';
 
 export type LevelData = { type: TileType; image: string | null }[][];
 export type Level = Tile[][];
 
 export let level: Tile[][] = [];
+
+export function findTile(level: Level, tileType: TileType): Position {
+  for (let y = 0; y < level.length; y++) {
+    for (let x = 0; x < level[y].length; x++) {
+      if (level[y][x].getType() === tileType) {
+        return { x, y };
+      }
+    }
+  }
+  throw new Error('Tile type not found!');
+}
 
 export function loadLevel(): Promise<Level> {
   return new Promise((res, rej) => {

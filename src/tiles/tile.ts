@@ -73,6 +73,10 @@ export class Tile {
     }
   }
 
+  public getType(): TileType {
+    return this.type;
+  }
+
   public getImage(): HTMLImageElement {
     return this.image;
   }

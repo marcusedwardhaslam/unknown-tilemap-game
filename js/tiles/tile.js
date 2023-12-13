@@ -71,6 +71,9 @@ export class Tile {
                 throw new Error(`Unknown TileType in Tile constructor... ${type}`);
         }
     }
+    getType() {
+        return this.type;
+    }
     getImage() {
         return this.image;
     }

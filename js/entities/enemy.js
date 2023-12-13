@@ -1,10 +1,11 @@
 import config from '../config.js';
 import { renderRoute } from '../debug.js';
+import { findTile } from '../levels/manager.js';
 import { TILE_SIZE } from '../map.js';
 import { aStar } from '../pathfinding.js';
+import { TileType } from '../tiles/tile.js';
 export class Enemy {
-    constructor(pos, level) {
-        this.pos = pos;
+    constructor(level) {
         this.level = level;
         // This enemies current tick
         this.tick = 0;
@@ -17,8 +18,11 @@ export class Enemy {
         this.image = new Image();
         this.hitSound = new Audio('assets/sounds/zombiehit.wav');
         this.deathSound = new Audio('assets/sounds/zombiedeath.wav');
+        // Status
         this.hp = 0;
         this.dead = false;
+        this.pos = findTile(level, TileType.START);
+        this.goal = findTile(level, TileType.GOAL);
         this.updateRoute();
     }
     isDead() {
@@ -34,7 +38,7 @@ export class Enemy {
         return this.pos;
     }
     hit() {
-        this.hitSound.play();
+        // this.hitSound.play();
     }
     die() {
         this.deathSound.play();
@@ -62,15 +66,8 @@ export class Enemy {
             this.tick = 0;
         }
     }
-    // TODO: Dynamically get destination from map
     updateRoute() {
-        const route = aStar(this.level, {
-            x: this.pos.x,
-            y: this.pos.y,
-        }, {
-            x: 31,
-            y: 18,
-        });
+        const route = aStar(this.level, this.pos, this.goal);
         this.route = route;
     }
     takeDamage(damage) {

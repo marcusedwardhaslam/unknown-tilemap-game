@@ -21,7 +21,7 @@ export class Turret {
   protected attackTick = 0;
 
   // Attack once every half a second
-  protected attackTickRate = config.fps * 0.5;
+  protected attackTickRate = config.fps * 0.25;
 
   protected arrowFireSound: HTMLAudioElement = new Audio(
     'assets/sounds/arrowfire.wav'
@@ -99,7 +99,7 @@ export class Turret {
 
   private attack(target: Enemy) {
     target.takeDamage(this.attackDamage);
-    this.arrowFireSound.play();
+    // this.arrowFireSound.play();
     this.attackTick = this.attackTickRate;
     if (target.isDead()) {
       this.target = null;

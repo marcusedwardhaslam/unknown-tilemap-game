@@ -2,7 +2,7 @@ import { TILE_SIZE } from './map.js';
 import { Position } from './pathfinding.js';
 
 interface Handlers {
-  [key: string]: (tilePos: Position) => any;
+  [key: string]: (tilePos: Position) => void;
 }
 
 function eventIsMouseEvent(e: Event | MouseEvent): e is MouseEvent {
@@ -17,7 +17,6 @@ const convertClickToTilePosition = (e: MouseEvent) => ({
   y: Math.floor(e.offsetX / TILE_SIZE),
 });
 
-// TODO: Fix types
 export function registerEventListeners(
   canvas: HTMLCanvasElement,
   handlers: Handlers
