@@ -66,12 +66,13 @@ export class Enemy {
         ctx.drawImage(this.image, this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE);
         ctx.strokeRect(this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE - 5, TILE_SIZE + 1, 4);
         const hpPercentRemaining = (this.hp / this.maxHp) * 100;
+        const hpPercentLost = ((this.maxHp - this.hp) / this.maxHp) * 100;
         const hpRemainingStatusBarWidth = (hpPercentRemaining / 100) * TILE_SIZE;
+        const hpLostStatusBarWidth = (hpPercentLost / 100) * TILE_SIZE;
         ctx.fillStyle = 'green';
         ctx.fillRect(this.pos.x * TILE_SIZE, this.pos.y * TILE_SIZE - 5, hpRemainingStatusBarWidth, 3);
-        const hpLostStatusBarWidth = TILE_SIZE - hpRemainingStatusBarWidth;
         ctx.fillStyle = 'red';
-        ctx.fillRect(this.pos.x * TILE_SIZE + hpLostStatusBarWidth, this.pos.y * TILE_SIZE - 5, hpLostStatusBarWidth, 3);
+        ctx.fillRect(this.pos.x * TILE_SIZE + hpRemainingStatusBarWidth, this.pos.y * TILE_SIZE - 5, hpLostStatusBarWidth, 3);
     }
     updatePosition() {
         const nextPosition = this.route.splice(0, 1)[0];

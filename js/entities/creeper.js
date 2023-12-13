@@ -4,7 +4,7 @@ export class Creeper extends Enemy {
     constructor(level) {
         super(level);
         this.name = 'creeper';
-        this.maxHp = 1;
+        this.maxHp = 2;
         this.fillStyle = 'blue';
         // How many frames need to pass before creeper moves
         this.tickRate = 4;

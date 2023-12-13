@@ -96,7 +96,9 @@ export class Enemy {
       4
     );
     const hpPercentRemaining = (this.hp / this.maxHp) * 100;
+    const hpPercentLost = ((this.maxHp - this.hp) / this.maxHp) * 100;
     const hpRemainingStatusBarWidth = (hpPercentRemaining / 100) * TILE_SIZE;
+    const hpLostStatusBarWidth = (hpPercentLost / 100) * TILE_SIZE;
     ctx.fillStyle = 'green';
     ctx.fillRect(
       this.pos.x * TILE_SIZE,
@@ -104,10 +106,9 @@ export class Enemy {
       hpRemainingStatusBarWidth,
       3
     );
-    const hpLostStatusBarWidth = TILE_SIZE - hpRemainingStatusBarWidth;
     ctx.fillStyle = 'red';
     ctx.fillRect(
-      this.pos.x * TILE_SIZE + hpLostStatusBarWidth,
+      this.pos.x * TILE_SIZE + hpRemainingStatusBarWidth,
       this.pos.y * TILE_SIZE - 5,
       hpLostStatusBarWidth,
       3
