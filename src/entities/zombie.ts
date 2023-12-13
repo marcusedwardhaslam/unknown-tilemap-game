@@ -8,7 +8,7 @@ export class Zombie extends Enemy {
   protected fillStyle = 'green';
 
   // How many frames need to pass before zombie moves
-  protected tickRate = 8;
+  protected tickRate = 14;
 
   protected image = new Image();
 

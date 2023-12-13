@@ -7,7 +7,7 @@ export class Zombie extends Enemy {
         this.maxHp = 4;
         this.fillStyle = 'green';
         // How many frames need to pass before zombie moves
-        this.tickRate = 8;
+        this.tickRate = 14;
         this.image = new Image();
         this.hp = this.maxHp;
         this.image.src = `${config.assets.path}/images/zombie.png`;
