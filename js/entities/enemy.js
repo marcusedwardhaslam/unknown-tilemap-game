@@ -16,7 +16,11 @@ export class Enemy {
         this.width = 16;
         this.fillStyle = 'grey';
         this.image = new Image();
-        this.hitSound = new Audio('assets/sounds/zombiehit.wav');
+        this.hitSound = [
+            new Audio('assets/sounds/zombiehit1.wav'),
+            new Audio('assets/sounds/zombiehit2.wav'),
+            new Audio('assets/sounds/zombiehit3.wav'),
+        ];
         this.deathSound = new Audio('assets/sounds/zombiedeath.wav');
         // Status
         this.hp = 0;
@@ -38,7 +42,9 @@ export class Enemy {
         return this.pos;
     }
     hit() {
-        // this.hitSound.play();
+        const hitSound = this.hitSound[Math.floor(Math.random() * this.hitSound.length)];
+        hitSound.volume = 0.01;
+        // hitSound.play();
     }
     die() {
         // this.deathSound.play();

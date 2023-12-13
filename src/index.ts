@@ -8,14 +8,9 @@ import {
 } from './graphics.js';
 import { level, loadLevel } from './levels/manager.js';
 import { playGame } from './game.js';
-import { Position } from './pathfinding.js';
-import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './debug.js';
 import config from './config.js';
-
-function changeTileType(pos: Position) {
-  console.log(pos);
-}
+import { setupControls } from './controls.js';
 
 function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
   setTimeout(() => {
@@ -45,18 +40,21 @@ function draw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
 }
 
 async function main() {
+  // Download level data
   const level = await loadLevel();
 
+  // Setup canvas and context
   const canvas = getCanvas();
   adjustCanvasSize(canvas);
   const context = getContext(canvas);
 
+  // Create game state
   initGameManager(level);
 
-  registerEventListeners(canvas, {
-    click: changeTileType,
-  });
+  // Setup controls
+  setupControls(canvas);
 
+  // Initial draw
   draw(canvas, context);
 }
 

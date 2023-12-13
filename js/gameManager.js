@@ -1,21 +1,23 @@
-import { Creeper } from './entities/creeper.js';
-import { Turret } from './entities/turret.js';
 import { Zombie } from './entities/zombie.js';
 export const gameManager = {
     enemyGameObjects: [],
     playerGameObjects: [],
+    level: null,
+    mobSpawner: () => console.log('Mob spawner not initialized'),
 };
 export function initGameManager(level) {
-    gameManager.enemyGameObjects = [
-        new Creeper(level),
-        new Creeper(level),
-        new Zombie(level),
-        new Zombie(level),
-        new Zombie(level),
-    ];
-    gameManager.playerGameObjects = [
-        new Turret({ x: 5, y: 6 }, level),
-        new Turret({ x: 18, y: 11 }, level),
-    ];
+    gameManager.level = level;
+    gameManager.mobSpawner = () => {
+        gameManager.enemyGameObjects.push(new Zombie(level));
+        setTimeout(gameManager.mobSpawner, 5000);
+    };
+    // TODO: Is this wise? move init elsewhere
+    gameManager.mobSpawner();
     return gameManager;
+}
+export function addEnemy(enemy) {
+    gameManager.enemyGameObjects.push(enemy);
+}
+export function addTurret(turret) {
+    gameManager.playerGameObjects.push(turret);
 }

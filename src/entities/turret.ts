@@ -1,6 +1,5 @@
 import { Position } from '../pathfinding.js';
 import { TILE_SIZE } from '../map.js';
-import { Level } from '../levels/manager.js';
 import { Enemy } from './enemy.js';
 import config from '../config.js';
 
@@ -21,14 +20,16 @@ export class Turret {
   protected attackTick = 0;
 
   // Attack once every half a second
-  protected attackTickRate = config.fps * 0.25;
+  protected attackTickRate = config.fps * 1;
 
-  protected arrowFireSound: HTMLAudioElement = new Audio(
-    'assets/sounds/arrowfire.wav'
-  );
+  protected arrowFireSounds: HTMLAudioElement[] = [
+    new Audio('assets/sounds/arrow1.wav'),
+    new Audio('assets/sounds/arrow2.wav'),
+    new Audio('assets/sounds/arrow3.wav'),
+  ];
 
-  constructor(protected pos: Position, protected level: Level) {
-    this.image.src = `${config.assets.path}/images/castle.png`;
+  constructor(protected pos: Position) {
+    this.image.src = `${config.assets.path}/images/archer.png`;
     this.boundary = {
       topLeft: {
         x: this.pos.x - this.tileRange,
@@ -99,7 +100,12 @@ export class Turret {
 
   private attack(target: Enemy) {
     target.takeDamage(this.attackDamage);
-    // this.arrowFireSound.play();
+    const arrowFireSound =
+      this.arrowFireSounds[
+        Math.floor(Math.random() * this.arrowFireSounds.length)
+      ];
+    arrowFireSound.volume = 1;
+    // arrowFireSound.play();
     this.attackTick = this.attackTickRate;
     if (target.isDead()) {
       this.target = null;

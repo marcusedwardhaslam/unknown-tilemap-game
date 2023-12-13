@@ -1,5 +1,5 @@
 import { Tile } from '../tiles/tile.js';
-import { json } from './allmud.js';
+import { json } from './nicemap.js';
 export let level = [];
 export function findTile(level, tileType) {
     for (let y = 0; y < level.length; y++) {

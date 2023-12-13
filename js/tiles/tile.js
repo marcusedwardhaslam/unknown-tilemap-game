@@ -21,6 +21,7 @@ export class Tile {
     constructor(type) {
         this.type = type;
         this.image = new Image();
+        this.occupied = false;
         switch (type) {
             case TileType.GOAL:
                 this.image.src = `${config.assets.path}/images/chest.png`;
@@ -76,6 +77,12 @@ export class Tile {
     }
     getImage() {
         return this.image;
+    }
+    setOccupied(occupied) {
+        this.occupied = occupied;
+    }
+    isOccupied() {
+        return this.occupied;
     }
     isPath() {
         return (this.type === TileType.GOAL ||

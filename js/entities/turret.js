@@ -1,18 +1,21 @@
 import { TILE_SIZE } from '../map.js';
 import config from '../config.js';
 export class Turret {
-    constructor(pos, level) {
+    constructor(pos) {
         this.pos = pos;
-        this.level = level;
         this.tileRange = 4;
         this.image = new Image();
         this.target = null;
         this.attackDamage = 1;
         this.attackTick = 0;
         // Attack once every half a second
-        this.attackTickRate = config.fps * 0.25;
-        this.arrowFireSound = new Audio('assets/sounds/arrowfire.wav');
-        this.image.src = `${config.assets.path}/images/castle.png`;
+        this.attackTickRate = config.fps * 1;
+        this.arrowFireSounds = [
+            new Audio('assets/sounds/arrow1.wav'),
+            new Audio('assets/sounds/arrow2.wav'),
+            new Audio('assets/sounds/arrow3.wav'),
+        ];
+        this.image.src = `${config.assets.path}/images/archer.png`;
         this.boundary = {
             topLeft: {
                 x: this.pos.x - this.tileRange,
@@ -68,7 +71,9 @@ export class Turret {
     }
     attack(target) {
         target.takeDamage(this.attackDamage);
-        // this.arrowFireSound.play();
+        const arrowFireSound = this.arrowFireSounds[Math.floor(Math.random() * this.arrowFireSounds.length)];
+        arrowFireSound.volume = 1;
+        // arrowFireSound.play();
         this.attackTick = this.attackTickRate;
         if (target.isDead()) {
             this.target = null;

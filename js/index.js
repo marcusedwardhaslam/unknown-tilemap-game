@@ -12,12 +12,9 @@ import { gameManager, initGameManager } from './gameManager.js';
 import { clearScreen, renderEnemies, renderMapGraphics, renderPlayerTurrets, } from './graphics.js';
 import { level, loadLevel } from './levels/manager.js';
 import { playGame } from './game.js';
-import { registerEventListeners } from './controls.js';
 import { renderTileMapGrid } from './debug.js';
 import config from './config.js';
-function changeTileType(pos) {
-    console.log(pos);
-}
+import { setupControls } from './controls.js';
 function draw(canvas, ctx) {
     setTimeout(() => {
         requestAnimationFrame(() => {
@@ -40,14 +37,17 @@ function draw(canvas, ctx) {
 }
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
+        // Download level data
         const level = yield loadLevel();
+        // Setup canvas and context
         const canvas = getCanvas();
         adjustCanvasSize(canvas);
         const context = getContext(canvas);
+        // Create game state
         initGameManager(level);
-        registerEventListeners(canvas, {
-            click: changeTileType,
-        });
+        // Setup controls
+        setupControls(canvas);
+        // Initial draw
         draw(canvas, context);
     });
 }

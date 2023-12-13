@@ -17,9 +17,11 @@ export class Enemy {
   protected width = 16;
   protected fillStyle = 'grey';
   protected image = new Image();
-  protected hitSound: HTMLAudioElement = new Audio(
-    'assets/sounds/zombiehit.wav'
-  );
+  protected hitSound: HTMLAudioElement[] = [
+    new Audio('assets/sounds/zombiehit1.wav'),
+    new Audio('assets/sounds/zombiehit2.wav'),
+    new Audio('assets/sounds/zombiehit3.wav'),
+  ];
   protected deathSound: HTMLAudioElement = new Audio(
     'assets/sounds/zombiedeath.wav'
   );
@@ -55,7 +57,10 @@ export class Enemy {
   }
 
   public hit(): void {
-    // this.hitSound.play();
+    const hitSound =
+      this.hitSound[Math.floor(Math.random() * this.hitSound.length)];
+    hitSound.volume = 0.01;
+    // hitSound.play();
   }
 
   public die(): void {

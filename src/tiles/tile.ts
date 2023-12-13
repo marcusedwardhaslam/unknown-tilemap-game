@@ -20,6 +20,7 @@ export enum TileType {
 
 export class Tile {
   protected image = new Image();
+  protected occupied = false;
 
   constructor(protected type: TileType) {
     switch (type) {
@@ -79,6 +80,14 @@ export class Tile {
 
   public getImage(): HTMLImageElement {
     return this.image;
+  }
+
+  public setOccupied(occupied: boolean): void {
+    this.occupied = occupied;
+  }
+
+  public isOccupied(): boolean {
+    return this.occupied;
   }
 
   isPath() {

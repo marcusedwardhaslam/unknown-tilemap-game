@@ -1,3 +1,6 @@
+import { Turret } from './entities/turret.js';
+import { addTurret } from './gameManager.js';
+import { level } from './levels/manager.js';
 import { TILE_SIZE } from './map.js';
 import { Position } from './pathfinding.js';
 
@@ -13,8 +16,8 @@ function eventIsMouseEvent(e: Event | MouseEvent): e is MouseEvent {
 }
 
 const convertClickToTilePosition = (e: MouseEvent) => ({
-  x: Math.floor(e.offsetY / TILE_SIZE),
-  y: Math.floor(e.offsetX / TILE_SIZE),
+  x: Math.floor(e.offsetX / TILE_SIZE),
+  y: Math.floor(e.offsetY / TILE_SIZE),
 });
 
 export function registerEventListeners(
@@ -28,5 +31,18 @@ export function registerEventListeners(
         handlers[key](tilePos);
       }
     });
+  });
+}
+
+export function setupControls(canvas: HTMLCanvasElement) {
+  registerEventListeners(canvas, {
+    click: (tilePos) => {
+      const tile = level[tilePos.y][tilePos.x];
+      if (tile.isPath() || tile.isOccupied()) {
+        return;
+      }
+      tile.setOccupied(true);
+      addTurret(new Turret(tilePos));
+    },
   });
 }
